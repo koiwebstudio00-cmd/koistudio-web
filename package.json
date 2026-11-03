@@ -1,0 +1,19 @@
+{
+  "name": "koi-studio",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Sitio institucional de Koi Studio, basado en el manual de marca v1.",
+  "scripts": {
+    "dev": "node scripts/build.mjs && node scripts/server.mjs",
+    "build": "node scripts/build.mjs",
+    "start": "node scripts/server.mjs",
+    "check": "node scripts/check.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "gsap": "3.15.0"
+  }
+}
