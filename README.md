@@ -65,3 +65,9 @@ Entradas escalonadas, parallax leve de la portada en escritorio, progreso de lec
 ## Refinamiento v3
 
 `src/refinement.css` añade navbar compacto, hero centrado con fondo CSS, iconos SVG y diagrama responsive. Se mantienen las cards de productos. ScrollTrigger controla el parallax por capas, la línea del diagrama y la transición tipográfica. El servidor local existente puede mantenerse abierto: después de `npm run build`, recargar el navegador.
+
+## Favicon e imagen social
+
+Los PNG `assets/brand/icon-{16,32,48,180,192,512}.png` y el ICO multiresolución se generan con `scripts/create-icons.ps1` a partir del isotipo original, sobre fondo oscuro y con margen. El original no se modifica. El build publica favicon.ico en la raíz, los tamaños PNG, apple-touch-icon y site.webmanifest.
+
+`assets/social-card.jpg` es el render final de 1200 × 630 utilizado por Open Graph y Twitter en todas las páginas. `src/social-preview.html` y `src/social-preview.css` conservan la composición editable, con fuentes y logo originales, sobre `assets/social-background.jpg`. Para regenerar: servir temporalmente el HTML en /social-preview.html y su CSS en /assets/social-preview.css, capturar a 1200 × 630 con las fuentes cargadas, guardar en assets/social-card.jpg y reconstruir. La página de render no forma parte de la publicación.
