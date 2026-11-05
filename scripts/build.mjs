@@ -56,9 +56,11 @@ function shell(title, description, route, content, index = true) {
 <meta property="og:image" content="${escape(social)}">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="${escape(social)}">
+<link rel="stylesheet" href="/assets/lenis.css">
 <link rel="stylesheet" href="/assets/styles.css">
 <script type="application/ld+json">${JSON.stringify(organization).replace(/</g, "\\u003c")}</script>
-<script src="/assets/app.js" defer></script>
+<script type="module" src="/assets/app.js"></script>
+${route === '/' ? '<script type="module" src="/assets/waves-shader.js"></script>' : ''}
 <script src="/assets/analytics.js" defer></script>
 </head>
 <body>
@@ -90,20 +92,20 @@ function shell(title, description, route, content, index = true) {
 </html>`;
 }
 
-const heading = (label, title) => `<div class="section-heading" data-enter>${note(label)}<h2>${escape(title)}</h2></div>`;
+const heading = (label, title, accent = '') => `<div class="section-heading" data-enter>${note(label)}<h2>${escape(title)}${accent ? ` <em class="editorial">${escape(accent)}</em>` : ''}</h2></div>`;
 const illustration = product => `<img src="${asset(product.image)}" alt="${escape(product.alt)}" width="1254" height="1254" loading="lazy">`;
 const clientLogo = project => `<div class="case-logo"${project.darkLogoSource ? ' data-dark-source="true"' : ''}><img src="${asset('clients/' + project.logo)}" alt="" loading="lazy"></div>`;
 const closing = `<section class="closing"><div class="wrap" data-enter>
   ${note('04 / HABLEMOS')}
-  <h2>¿Qué tarea te gustaría dejar de hacer a mano?</h2>
+  <h2>¿Qué tarea te gustaría <em class="editorial">dejar de hacer a mano?</em></h2>
   <p>Contanos cómo la resuelven hoy. Con un ejemplo alcanza para empezar a hablar.</p>
   ${button('Escribinos por WhatsApp', contact, 'black')}
 </div></section>`;
-const intro = `<section class="hero grid-bg"><div class="wrap">
+const intro = `<section class="hero"><div class="hero-waves" aria-hidden="true"><canvas id="hero-waves"></canvas></div><div class="wrap">
   <div class="hero-main">
     <div class="hero-copy" data-enter>
       ${note('KOI STUDIO / EMPLEADOS DIGITALES')}
-      <h1>Armamos empleados digitales <span>para que no tengas que estar en todo.</span></h1>
+      <h1>Armamos <em class="editorial">empleados digitales</em> para que no tengas que estar en todo.</h1>
       <p>Atienden consultas, toman pedidos y retoman conversaciones de venta. Los armamos con tus precios, tus horarios y tus reglas, para que resuelvan lo de todos los días y te pasen lo que necesita tu atención.</p>
       <div class="actions">${button('Ver cómo funciona', '#vsl', 'secondary', '<span aria-hidden="true">↓</span>')}${button('Hablemos por WhatsApp', whatsapp())}</div>
     </div>
@@ -111,30 +113,31 @@ const intro = `<section class="hero grid-bg"><div class="wrap">
   </div>
   ${await media('media/koi-vsl.mp4', 'KOI STUDIO / CÓMO FUNCIONA', 'Video en preparación', 'vsl')}
 </div></section>`;
-const productCards = products.map((product, index) => `<article class="product-card" data-enter>
+const beamVariants = ['quick', 'slow', 'thick'];
+const productCards = products.map((product, index) => `<article class="product-card" data-beam="${beamVariants[index]}" data-enter>
   <div class="product-art">${illustration(product)}<span aria-hidden="true">0${index + 1}</span></div>
   <div class="card-content">${note(product.sector)}<h3>${product.name}</h3><p class="scene">${escape(product.scene)}</p><p>${escape(product.description)}</p>
   ${button('Conocé ' + product.name, productPath(product), 'text-button')}</div>
 </article>`).join('');
-const featured = projects.slice(0, 3).map(project => `<article class="case-card" data-enter>
+const featured = projects.slice(0, 3).map((project, index) => `<article class="case-card" data-beam="${beamVariants[index]}" data-beam-reveal data-enter>
   ${clientLogo(project)}${note(project.label)}<h3>${escape(project.name)}</h3>
   <p>${escape(project.summary)}</p>${button('Ver el caso', projectPath(project.slug), 'text-button')}
 </article>`).join('');
-const workshopCards = workshops.map(workshop => `<article class="workshop-card" data-enter>
+const workshopCards = workshops.map((workshop, index) => `<article class="workshop-card" data-beam="${index === 0 ? 'quick' : 'slow'}" data-beam-reveal data-enter>
   ${note(workshop.length)}<h3>${escape(workshop.title)}</h3><p>${escape(workshop.description)}</p>
 </article>`).join('');
 const home = `${intro}
 <section class="section light" id="productos"><div class="wrap">
-  ${heading('01 / PRODUCTOS', 'Tres rubros. Tres formas de sacarte trabajo de encima.')}
+  ${heading('01 / PRODUCTOS', 'Tres rubros. Tres formas de', 'sacarte trabajo de encima.')}
   <div class="three-up">${productCards}</div>
 </div></section>
 <section class="section grid-bg"><div class="wrap">
-  ${heading('02 / PROYECTOS', 'Así se usa lo que hacemos.')}
+  ${heading('02 / PROYECTOS', 'Así se usa', 'lo que hacemos.')}
   <div class="three-up">${featured}</div>
   <div class="section-action">${button('Ver todos los proyectos', '/proyectos/', 'secondary')}</div>
 </div></section>
 <section class="section light" id="workshops"><div class="wrap">
-  ${heading('03 / WORKSHOPS', 'Probemos la IA con algo que tu equipo ya hace todos los días.')}
+  ${heading('03 / WORKSHOPS', 'Probemos la IA con algo que tu equipo', 'ya hace todos los días.')}
   <p class="section-lead">Traigan una tarea de verdad. Un presupuesto que siempre arranca de cero, un informe que lleva media mañana o las mismas preguntas que el equipo responde cada semana. Sobre eso trabajamos.</p>
   <div class="two-up">${workshopCards}</div>
   <div class="workshop-end"><p>Si quieren seguir, podemos hacer un relevamiento completo de la empresa. Con eso les presentamos una propuesta que explica qué desarrollaríamos, qué procesos automatizaríamos y cuánto costaría por mes mantenerlo funcionando.</p>
@@ -173,9 +176,13 @@ for (const product of products) {
 await rm(out, { recursive: true, force: true });
 await mkdir(out, { recursive: true });
 await cp(path.join(root, 'assets'), path.join(out, 'assets'), { recursive: true });
-for (const file of ['styles.css', 'app.js', 'analytics.js']) {
+for (const file of ['styles.css', 'app.js', 'analytics.js', 'waves-shader.js']) {
   await cp(path.join(root, 'src', file), path.join(out, 'assets', file));
 }
+const lenis = path.join(root, 'node_modules/lenis');
+await cp(path.join(lenis, 'dist/lenis.mjs'), path.join(out, 'assets/lenis.js'));
+await cp(path.join(lenis, 'dist/lenis.css'), path.join(out, 'assets/lenis.css'));
+await cp(path.join(lenis, 'LICENSE'), path.join(out, 'assets/lenis-LICENSE.txt'));
 await cp(path.join(root, 'assets/brand/favicon.ico'), path.join(out, 'favicon.ico'));
 for (const [route, title, description, body] of pages) {
   const directory = path.join(out, route);

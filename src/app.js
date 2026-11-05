@@ -1,3 +1,24 @@
+import Lenis from './lenis.js';
+
+const lenis = new Lenis({ autoRaf: true, lerp: 0.095, stopInertiaOnNavigate: true });
+
+document.addEventListener('click', event => {
+  if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+  const link = event.target.closest('a[href]');
+  if (!link || link.target || link.hasAttribute('download') || link.classList.contains('skip')) return;
+  const url = new URL(link.href);
+  if (url.origin !== location.origin || url.pathname !== location.pathname || url.search !== location.search || !url.hash) return;
+  let id;
+  try { id = decodeURIComponent(url.hash.slice(1)); } catch { return; }
+  const target = document.getElementById(id);
+  if (!target) return;
+  event.preventDefault();
+  if (location.hash !== url.hash) history.pushState(null, '', url.hash);
+  if (!target.hasAttribute('tabindex')) target.tabIndex = -1;
+  target.focus({ preventScroll: true });
+  lenis.scrollTo(target);
+});
+
 const menuButton = document.querySelector('.menu-toggle');
 const mobileNav = document.querySelector('#mobile-nav');
 
