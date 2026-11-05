@@ -1,59 +1,180 @@
-import { heroSection, ctaSection, renderProjectCard, flowSection, scrollStatement, icon } from '../src/sections.mjs';
-import { readFile, writeFile, mkdir, cp } from 'node:fs/promises';
-import { fileURLToPath } from 'node:url';
+import { cp, mkdir, readFile, rm, stat, writeFile } from 'node:fs/promises';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { products, projects, workshops } from '../src/content.mjs';
+
 const root = fileURLToPath(new URL('../', import.meta.url));
-const readJSON = async name => JSON.parse(await readFile(path.join(root, name), 'utf8'));
-const config = await readJSON('site.config.json');
-const projects = await readJSON('src/projects.json');
-const clients = await readJSON('src/clients.json');
 const out = path.join(root, 'dist');
-await mkdir(out, { recursive: true });
-await cp(path.join(root, 'assets/brand/favicon.ico'), path.join(out, 'favicon.ico'));
-await writeFile(path.join(out, 'site.webmanifest'), JSON.stringify({name:'Koi Studio',short_name:'Koi',lang:'es-AR',start_url:'/',display:'browser',background_color:'#F2F2F0',theme_color:'#FA5D00',icons:[{src:'/assets/brand/icon-192.png',sizes:'192x192',type:'image/png'},{src:'/assets/brand/icon-512.png',sizes:'512x512',type:'image/png'}]},null,2));
-await cp(path.join(root, 'assets'), path.join(out, 'assets'), { recursive: true });
-await cp(path.join(root, 'src/styles.css'), path.join(out, 'assets/styles.css'));
-await cp(path.join(root, 'src/app.js'), path.join(out, 'assets/app.js'));
-await cp(path.join(root, 'src/design.css'), path.join(out, 'assets/design.css'));
-await cp(path.join(root, 'src/refinement.css'), path.join(out, 'assets/refinement.css'));
-await cp(path.join(root, 'src/motion.js'), path.join(out, 'assets/motion.js'));
-await cp(path.join(root, 'src/analytics.js'), path.join(out, 'assets/analytics.js'));
-await mkdir(path.join(out, 'assets/vendor'), { recursive: true });
-for (const name of ['gsap.min.js', 'ScrollTrigger.min.js']) {
-  await cp(path.join(root, 'node_modules/gsap/dist', name), path.join(out, 'assets/vendor', name));
-}
-const gsapPackage = await readJSON('node_modules/gsap/package.json');
-await writeFile(path.join(out, 'assets/vendor/GSAP-NOTICE.txt'), `GSAP ${gsapPackage.version}\nCopyright GreenSock / Webflow\n${gsapPackage.license}\nOriginal license headers are preserved in both distributed JavaScript files.\n`);
-const e = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const config = JSON.parse(await readFile(path.join(root, 'site.config.json'), 'utf8'));
+const escape = value => String(value).replace(/[&<>"']/g, char => ({
+  '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+})[char]);
+const whatsapp = message => 'https://wa.me/5493815709287' + (message ? '?text=' + encodeURIComponent(message) : '');
 const arrow = '<span aria-hidden="true">↗</span>';
-const label = text => `<p class="eyebrow">${text}</p>`;
-const btn = (text, href, cls = '') => `<a class="button ${cls}" href="${href}">${text}${arrow}</a>`;
-const logo = (white = false) => `<span class="logo-frame"><img src="/assets/brand/logo-${white ? 'white' : 'black'}.png" alt="Koi Studio" width="200" height="200"></span>`;
-function shell(title, description, route, content, { noindex = false } = {}) {
-  // Preserve word boundaries where mobile layouts hide editorial line breaks.
-  content = content.replaceAll('<br>', '<br> ');
+const button = (label, href, style = 'primary', glyph = arrow) =>
+  `<a class="button ${style}" href="${escape(href)}">${escape(label)}${glyph}</a>`;
+const note = text => `<p class="eyebrow">${escape(text)}</p>`;
+const productPath = product => '/productos/' + product.slug + '/';
+const projectPath = slug => '/proyectos/#' + slug;
+const contact = whatsapp('Hola, equipo de Koi. Hay una tarea que hacemos a mano y quiero ver si se puede automatizar.');
+const menu = '<a href="/#productos">Productos</a><a href="/proyectos/">Proyectos</a><a href="/#workshops">Workshops</a>';
+const brand = `<a class="brand" href="/" aria-label="Koi Studio, inicio"><img src="/assets/brand/koi-symbol.png" width="38" height="38" alt=""><span>Koi Studio<small>AI &amp; SOFTWARE</small></span></a>`;
+const asset = name => '/assets/' + name;
+
+async function media(file, title, pending, id = '') {
+  const available = await stat(path.join(root, 'assets', file)).then(info => info.isFile(), () => false);
+  const video = file.endsWith('.mp4');
+  return `<figure class="media-slot ${available ? 'available' : 'pending'}"${id ? ` id="${id}"` : ''}>
+    <figcaption><span class="status-dot"></span>${escape(title)}</figcaption>
+    ${available ? video
+      ? `<video controls playsinline preload="none" src="${asset(file)}" aria-label="${escape(title)}"></video>`
+      : `<img src="${asset(file)}" alt="${escape(title)}" loading="lazy">`
+      : `<div class="media-empty"><span class="media-icon" aria-hidden="true">${video ? '◎' : '⊞'}</span><p>${escape(pending)}</p></div>`}
+  </figure>`;
+}
+
+function shell(title, description, route, content, index = true) {
   const canonical = config.url + route;
-  const schema = { '@context': 'https://schema.org', '@type': 'Organization', name: config.name, url: config.url, logo: config.url + '/assets/brand/logo-black.png', email: config.email, description: config.description, sameAs: [config.instagram, config.linkedin].filter(Boolean) };
-  return `<!doctype html><html lang="es-AR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${e(title)}</title><meta name="description" content="${e(description)}"><meta name="robots" content="${noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large'}"><link rel="canonical" href="${canonical}"><meta name="theme-color" content="#F2F2F0"><meta property="og:type" content="website"><meta property="og:locale" content="es_AR"><meta property="og:site_name" content="Koi Studio"><meta property="og:title" content="${e(title)}"><meta property="og:description" content="${e(description)}"><meta property="og:url" content="${canonical}"><meta property="og:image" content="${config.url}/assets/social-card.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="Koi Studio — Tu negocio, en otra escala. Empleados digitales y software."><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${e(title)}"><meta name="twitter:description" content="${e(description)}"><meta name="twitter:image" content="${config.url}/assets/social-card.jpg"><meta property="og:image:type" content="image/jpeg"><meta name="twitter:image:alt" content="Koi Studio — Tu negocio, en otra escala."><link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" sizes="32x32" href="/assets/brand/icon-32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/brand/icon-16.png"><link rel="apple-touch-icon" sizes="180x180" href="/assets/brand/icon-180.png"><link rel="manifest" href="/site.webmanifest"><link rel="preload" href="/assets/fonts/Manrope-800.ttf" as="font" type="font/ttf" crossorigin><link rel="preload" href="/assets/fonts/Manrope-400.ttf" as="font" type="font/ttf" crossorigin><link rel="stylesheet" href="/assets/styles.css"><link rel="stylesheet" href="/assets/design.css"><link rel="stylesheet" href="/assets/refinement.css"><script type="application/ld+json">${JSON.stringify(schema).replace(/</g, '\\u003c')}</script><script src="/assets/vendor/gsap.min.js" defer></script><script src="/assets/vendor/ScrollTrigger.min.js" defer></script><script src="/assets/app.js" defer></script><script src="/assets/motion.js" defer></script><script src="/assets/analytics.js" defer></script></head><body class="${route === "/" ? "page-home" : "page-inner"}"><div class="scroll-progress" aria-hidden="true"></div><a class="skip" href="#contenido">Saltar al contenido</a><header class="header wrap"><a class="brand" href="/" aria-label="Koi Studio — Inicio">${logo()}</a><nav class="desktop-nav" aria-label="Principal"><a href="/#estudio">Estudio</a><a href="/#servicios">Qué hacemos</a><a href="/proyectos/" ${route.startsWith('/proyectos') ? 'aria-current="page"' : ''}>Proyectos</a></nav><a class="header-cta" href="/contacto/" ${route === '/contacto/' ? 'aria-current="page"' : ''}>Hablemos ${arrow}</a><button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-nav"><span></span><span></span></button><nav id="mobile-nav" class="mobile-nav" aria-label="Navegación móvil" hidden><a href="/#estudio">Estudio</a><a href="/#servicios">Qué hacemos</a><a href="/proyectos/">Proyectos</a><a href="/contacto/">Contacto</a></nav></header><main id="contenido">${content}</main><footer class="footer"><div class="wrap footer-top"><a class="brand" href="/" aria-label="Koi Studio — Inicio">${logo(true)}</a><p>Menos caos.<br>Más espacio para lo que importa.</p><a href="mailto:${config.email}">${config.email} ${arrow}</a></div><div class="wrap footer-bottom"><span>© ${new Date().getFullYear()} Koi Studio</span><div><a href="${config.instagram}" target="_blank" rel="noopener noreferrer">Instagram ${arrow}</a><a href="/contacto/">Contacto</a><a href="/privacidad/">Privacidad</a></div><span>Diseño, criterio y tecnología.</span></div></footer></body></html>`;
+  const social = config.url + '/assets/social-card.jpg';
+  const organization = { '@context': 'https://schema.org', '@type': 'Organization', name: config.name, url: config.url, logo: config.url + '/assets/brand/logo-black.png', email: config.email, sameAs: [config.instagram].filter(Boolean) };
+  return `<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>${escape(title)}</title>
+<meta name="description" content="${escape(description)}">
+<meta name="theme-color" content="#0b0b0b">
+<meta name="robots" content="${index ? 'index, follow' : 'noindex, follow'}">
+<link rel="canonical" href="${escape(canonical)}">
+<link rel="icon" href="/favicon.ico">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_AR">
+<meta property="og:title" content="${escape(title)}">
+<meta property="og:description" content="${escape(description)}">
+<meta property="og:url" content="${escape(canonical)}">
+<meta property="og:image" content="${escape(social)}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="${escape(social)}">
+<link rel="stylesheet" href="/assets/styles.css">
+<script type="application/ld+json">${JSON.stringify(organization).replace(/</g, "\\u003c")}</script>
+<script src="/assets/app.js" defer></script>
+<script src="/assets/analytics.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#contenido">Ir al contenido</a>
+<header class="header">
+  <div class="wrap header-inner">
+    ${brand}
+    <nav class="desktop-nav" aria-label="Principal">${menu}</nav>
+    ${button('Hablemos', whatsapp(), 'nav-cta')}
+    <button type="button" class="menu-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-nav"><span aria-hidden="true">☰</span></button>
+  </div>
+  <nav id="mobile-nav" class="mobile-nav wrap" aria-label="Navegación móvil" hidden>${menu}<a href="${whatsapp()}">WhatsApp ${arrow}</a></nav>
+</header>
+<main id="contenido">${content}</main>
+<footer class="footer">
+  <div class="wrap footer-inner">${brand}<span>© ${new Date().getFullYear()} Koi Studio</span><nav aria-label="Pie de página"><a href="${escape(config.instagram)}">Instagram</a><a href="/privacidad/">Privacidad</a></nav></div>
+</footer>
+</body>
+</html>`;
 }
-const projectCard = renderProjectCard;
-const cta = ctaSection;
-const home = `${heroSection}<section class="clients wrap" aria-labelledby="clients-title"><p id="clients-title">NEGOCIOS QUE TRABAJAN CON KOI</p><div class="client-names">${clients.map(c => `<span>${e(c.name)}</span>`).join('')}</div></section><section class="section wrap studio" id="estudio"><div>${label('01 / EL ESTUDIO')}<h2>La tecnología sirve<br>cuando el trabajo<br><em>funciona mejor.</em></h2></div><div class="studio-copy"><p class="lead">Somos Koi Studio. Convertimos tareas y consultas dispersas en procesos claros.</p><p>Nos metemos en la operación: qué pasa cuando entra una consulta, quién se hace cargo y dónde se pierde información. Desde ahí, diseñamos software y empleados digitales con un rol concreto.</p><p>Combinamos diseño, criterio de negocio y tecnología para ayudarte a trabajar con más visibilidad y menos fricción.</p><div class="principles"><span>Claridad antes que complejidad.</span><span>Tu equipo en el centro.</span><span>Procesos antes que promesas.</span></div></div>${flowSection}</section><section class="services-section" id="servicios"><div class="wrap section"><div class="section-heading"><div>${label('02 / QUÉ HACEMOS')}<h2>Del problema cotidiano<br>a una solución <em>concreta.</em></h2></div><p>No todo necesita automatizarse.<br>Encontramos dónde la tecnología<br>puede aportar de verdad.</p></div><div class="services"><article class="service"><div class="service-top"><span>01</span>${icon('compass')}</div><h3>Entendemos<br>tu operación.</h3><p>Revisamos tareas, información y puntos de fricción para definir qué conviene resolver primero.</p><span class="service-tag">Diagnóstico & estrategia</span></article><article class="service dark"><div class="service-top"><span>02</span>${icon('layers')}</div><h3>Diseñamos<br>el sistema.</h3><p>Definimos el rol del empleado digital, el recorrido de la información y los momentos que necesitan a tu equipo.</p><span class="service-tag">Diseño & desarrollo</span></article><article class="service orange"><div class="service-top"><span>03</span>${icon('arrow')}</div><h3>Lo llevamos<br>a la práctica.</h3><p>Implementamos, probamos y ajustamos la solución en el contexto real de tu negocio.</p><span class="service-tag">Implementación & mejora</span></article></div></div></section>${scrollStatement}<section class="section wrap"><div class="section-heading"><div>${label('03 / NUESTRO ECOSISTEMA')}<h2>Distintos negocios.<br>La misma búsqueda: <em>orden.</em></h2></div><a class="text-link" href="/proyectos/">Ver todos los proyectos ↗</a></div><div class="project-grid">${projects.map(projectCard).join('')}</div></section><section class="process-section"><div class="section wrap process"><div class="process-intro">${label('04 / CÓMO TRABAJAMOS')}<h2>Primero escuchar.<br>Después, <em>construir.</em></h2><p>Un proceso compartido, con decisiones claras<br>y lugar para aprender de lo que pasa.</p>${btn('Contanos tu desafío', '/contacto/', 'light')}</div><div class="process-journey"><span class="journey-track" aria-hidden="true"><span></span></span><ol class="steps"><li><span>01</span><div><h3>Nos contás qué está pasando.</h3><p>Partimos de un problema concreto de tu día a día.</p></div></li><li><span>02</span><div><h3>Definimos un alcance.</h3><p>Acordamos prioridades, entregables y cómo evaluar la solución.</p></div></li><li><span>03</span><div><h3>Construimos y probamos.</h3><p>Validamos el funcionamiento junto a las personas que lo van a usar.</p></div></li><li><span>04</span><div><h3>Ajustamos con criterio.</h3><p>La operación real nos muestra qué conviene mejorar.</p></div></li></ol></div></div></section><section class="section wrap faq"><div>${label('05 / PREGUNTAS FRECUENTES')}<h2>Antes de<br>dar el <em>paso.</em></h2></div><div><details><summary>¿Qué es un empleado digital?<span>+</span></summary><p>Es una solución de software diseñada para cumplir un rol definido en un proceso: organizar información, asistir en tareas o acompañar la atención. Su alcance y los controles humanos se definen según cada negocio.</p></details><details><summary>¿Tengo que cambiar todo lo que uso?<span>+</span></summary><p>Primero revisamos tus herramientas y cómo trabajás. A partir de eso evaluamos qué conservar, qué conectar y qué desarrollar. Las integraciones se confirman durante el diagnóstico.</p></details><details><summary>¿Trabajan con mi rubro?<span>+</span></summary><p>Lokation, Zyro y Toki se enfocan en inmobiliarias, concesionarias y gastronomía. También podemos conversar sobre un desafío particular de tu empresa y evaluar si podemos ayudarte.</p></details><details><summary>¿Cuánto cuesta y cuánto tarda?<span>+</span></summary><p>Depende del problema, el alcance y los sistemas involucrados. Después de una primera conversación, podemos definir una propuesta con entregables, tiempos y presupuesto.</p></details></div></section>${cta}`;
-await writePage('/', shell('Koi Studio — Empleados digitales, IA y software para tu negocio', config.description, '/', home));
-const clientCards = clients.map(c => `<article class="client-card" data-category="clientes"><div class="client-monogram" aria-hidden="true">${e(c.initials)}</div><div><span class="eyebrow">CLIENTE / ${e(c.label)}</span><h3>${e(c.name)}</h3><a class="text-link" href="/contacto/?interes=Proyecto%20a%20medida">Conversemos sobre tu proyecto ↗</a></div></article>`).join('');
-await writePage('/proyectos/', shell('Proyectos y clientes — Koi Studio', 'Explorá el ecosistema propio de Koi Studio —Lokation, Zyro y Toki— y conocé los negocios que trabajan con el estudio.', '/proyectos/', `<section class="wrap page-intro">${label('EL TRABAJO HABLA')}<h1>De la idea<br>a la <em>operación.</em></h1><p>Productos propios y relaciones con clientes.<br>Distintos desafíos, una misma forma de pensar.</p></section><section class="wrap portfolio"><div class="filter-bar" role="group" aria-label="Filtrar proyectos"><button class="filter active" data-filter="all" aria-pressed="true">Todos <span>08</span></button><button class="filter" data-filter="propios" aria-pressed="false">Productos propios <span>03</span></button><button class="filter" data-filter="clientes" aria-pressed="false">Clientes <span>05</span></button><span class="result-count" aria-live="polite">8 elementos</span></div><div class="project-grid">${projects.map(projectCard).join('')}${clientCards}</div><p class="portfolio-note">Cada negocio tiene su contexto. Explorá nuestros productos o conversemos sobre una solución a medida.</p></section>${cta}`));
-for (const [index, p] of projects.entries()) {
- await writePage(`/proyectos/${p.slug}/`, shell(`${p.name} — ${p.sector} | Koi Studio`, p.description, `/proyectos/${p.slug}/`, `<section class="wrap page-intro detail-intro"><a class="text-link" href="/proyectos/">← Todos los proyectos</a>${label(`PRODUCTO PROPIO / ${p.sector}`)}<h1>${p.name}<span class="orange-dot">.</span><br><em>${p.line}</em></h1><p>${p.description}</p><div class="tags">${p.focus.map(x => `<span>${x}</span>`).join('')}</div></section><section class="wrap detail-layout"><div class="detail-art">${projectCard(p,index)}</div><div><h2>El desafío.</h2><p>${p.problem}</p><h2>El enfoque.</h2><p>${p.approach}</p><p class="small-note">Esta ficha describe el territorio de trabajo del producto. El alcance, la disponibilidad y las integraciones se confirman en una conversación con Koi.</p>${btn(`Conversemos sobre ${p.name}`, `/contacto/?interes=${p.name}`, 'orange')}</div></section>${cta}`));
+
+const heading = (label, title) => `<div class="section-heading" data-enter>${note(label)}<h2>${escape(title)}</h2></div>`;
+const illustration = product => `<img src="${asset(product.image)}" alt="${escape(product.alt)}" width="1254" height="1254" loading="lazy">`;
+const clientLogo = project => `<div class="case-logo"><img src="${asset('clients/' + project.logo)}" alt="${escape(project.name)}" loading="lazy"></div>`;
+const closing = `<section class="closing"><div class="wrap" data-enter>
+  ${note('04 / HABLEMOS')}
+  <h2>¿Qué tarea te gustaría dejar de hacer a mano?</h2>
+  <p>Contanos cómo la resuelven hoy. Con un ejemplo alcanza para empezar a hablar.</p>
+  ${button('Escribinos por WhatsApp', contact, 'black')}
+</div></section>`;
+const intro = `<section class="hero grid-bg"><div class="wrap">
+  <div class="hero-main">
+    <div class="hero-copy" data-enter>
+      ${note('KOI STUDIO / EMPLEADOS DIGITALES')}
+      <h1>Armamos empleados digitales <span>para que no tengas que estar en todo.</span></h1>
+      <p>Atienden consultas, toman pedidos y retoman conversaciones de venta. Los armamos con tus precios, tus horarios y tus reglas, para que resuelvan lo de todos los días y te pasen lo que necesita tu atención.</p>
+      <div class="actions">${button('Ver cómo funciona', '#vsl', 'secondary', '<span aria-hidden="true">↓</span>')}${button('Hablemos por WhatsApp', whatsapp())}</div>
+    </div>
+    <div class="hero-art" aria-hidden="true"><img src="/assets/hero-v2.jpg" width="1536" height="1024" alt=""></div>
+  </div>
+  ${await media('media/koi-vsl.mp4', 'KOI STUDIO / CÓMO FUNCIONA', 'Video en preparación', 'vsl')}
+</div></section>`;
+const productCards = products.map((product, index) => `<article class="product-card" data-enter>
+  <div class="product-art">${illustration(product)}<span aria-hidden="true">0${index + 1}</span></div>
+  <div class="card-content">${note(product.sector)}<h3>${product.name}</h3><p class="scene">${escape(product.scene)}</p><p>${escape(product.description)}</p>
+  ${button('Conocé ' + product.name, productPath(product), 'text-button')}</div>
+</article>`).join('');
+const featured = projects.slice(0, 3).map(project => `<article class="case-card" data-enter>
+  ${clientLogo(project)}${note(project.label)}<h3>${escape(project.name)}</h3>
+  <p>${escape(project.summary)}</p>${button('Ver el caso', projectPath(project.slug), 'text-button')}
+</article>`).join('');
+const workshopCards = workshops.map(workshop => `<article class="workshop-card" data-enter>
+  ${note(workshop.length)}<h3>${escape(workshop.title)}</h3><p>${escape(workshop.description)}</p>
+</article>`).join('');
+const home = `${intro}
+<section class="section light" id="productos"><div class="wrap">
+  ${heading('01 / PRODUCTOS', 'Tres rubros. Tres formas de sacarte trabajo de encima.')}
+  <div class="three-up">${productCards}</div>
+</div></section>
+<section class="section grid-bg"><div class="wrap">
+  ${heading('02 / PROYECTOS', 'Así se usa lo que hacemos.')}
+  <div class="three-up">${featured}</div>
+  <div class="section-action">${button('Ver todos los proyectos', '/proyectos/', 'secondary')}</div>
+</div></section>
+<section class="section light" id="workshops"><div class="wrap">
+  ${heading('03 / WORKSHOPS', 'Probemos la IA con algo que tu equipo ya hace todos los días.')}
+  <p class="section-lead">Traigan una tarea de verdad. Un presupuesto que siempre arranca de cero, un informe que lleva media mañana o las mismas preguntas que el equipo responde cada semana. Sobre eso trabajamos.</p>
+  <div class="two-up">${workshopCards}</div>
+  <div class="workshop-end"><p>Si quieren seguir, podemos hacer un relevamiento completo de la empresa. Con eso les presentamos una propuesta que explica qué desarrollaríamos, qué procesos automatizaríamos y cuánto costaría por mes mantenerlo funcionando.</p>
+  ${button('Hablemos de un workshop', whatsapp('Hola, equipo de Koi. Quiero saber cómo sería un workshop para mi equipo.'))}</div>
+</div></section>${closing}`;
+
+const cases = await Promise.all(projects.map(async (project, index) => `<article class="case-detail" id="${project.slug}">
+  <div class="case-copy" data-enter>${clientLogo(project)}${note('0' + (index + 1) + ' / ' + project.sector)}
+  <h2>${escape(project.name)}</h2><p class="scene">${escape(project.scene)}</p><p>${escape(project.description)}</p></div>
+  ${await media('media/proyectos/' + project.slug + '.png', 'Captura de ' + project.name, 'Captura pendiente')}
+</article>`));
+const portfolio = `<section class="grid-bg inner-intro"><div class="wrap" data-enter>${note('PORTFOLIO / KOI STUDIO')}<h1>Así se usa lo que hacemos.</h1>
+  <nav class="case-index" aria-label="Casos del portfolio">${projects.map(project => `<a href="#${project.slug}">${escape(project.name)} ${arrow}</a>`).join('')}</nav>
+</div></section><section class="section light"><div class="wrap case-list">${cases.join('')}</div></section>${closing}`;
+
+const pages = [
+  ['/', 'Koi Studio | Empleados digitales para tu empresa', config.description, home],
+  ['/proyectos/', 'Proyectos | Koi Studio', 'Conocé cómo se usan las soluciones de Koi Studio en distintos equipos.', portfolio],
+];
+for (const product of products) {
+  const demo = product.slug === 'toki-ai' ? 'Demo de Toki AI' : 'Captura de ' + product.name;
+  const body = `<section class="grid-bg inner-intro"><div class="wrap product-detail">
+    <div data-enter><a class="back" href="/#productos">← Productos</a>${note(product.sector)}
+    <h1>${product.name}</h1><p class="scene">${escape(product.scene)}</p><p>${escape(product.description)}</p>
+    <div class="actions">${button('Hablemos de ' + product.name, whatsapp('Hola, equipo de Koi. Quiero saber cómo podría usar ' + product.name + ' en mi empresa.'))}</div></div>
+    <div class="detail-art">${illustration(product)}</div>
+  </div></section>
+  <section class="section light"><div class="wrap">
+    ${heading('PRODUCTO / ' + product.name.toUpperCase(), demo)}
+    ${await media('media/productos/' + product.slug + '.png', demo, 'Captura pendiente')}
+    ${product.project ? `<div class="section-action">${button(product.projectLabel, projectPath(product.project), 'text-button')}</div>` : ''}
+  </div></section>`;
+  pages.push([productPath(product), product.name + ' | Koi Studio', product.description, body]);
 }
-await writePage('/contacto/', shell('Contacto — Hablemos de tu proyecto | Koi Studio', 'Contanos qué está frenando a tu negocio. Contactá a Koi Studio por email, Instagram o prepará tu consulta con nuestro formulario.', '/contacto/', `<section class="wrap contact-layout"><div class="contact-copy">${label('<span class="status-dot"></span> EMPECEMOS POR UNA CONVERSACIÓN')}<h1>Contanos<br>qué podemos<br><em>ordenar.</em></h1><p>No hace falta que tengas la solución.<br>Alcanza con saber qué te gustaría mejorar.</p><div class="contact-links"><a href="mailto:${config.email}"><span>EMAIL</span>${config.email} ↗</a><a href="${config.instagram}" target="_blank" rel="noopener noreferrer"><span>INSTAGRAM</span>@koistudiook ↗</a></div><p class="contact-aside">Personas, procesos y tecnología.<br>En ese orden.</p></div><div class="form-panel"><form data-clarity-mask="true" id="contact-form" data-email="${config.email}"><h2>Tu próximo proyecto,<br>en pocas palabras.</h2><div class="form-row"><label>Tu nombre <span aria-hidden="true">*</span><input name="nombre" autocomplete="name" required maxlength="100" placeholder="¿Cómo te llamás?"></label><label>Email <span aria-hidden="true">*</span><input name="email" type="email" autocomplete="email" required maxlength="180" placeholder="vos@tuempresa.com"></label></div><label>Empresa<input name="empresa" autocomplete="organization" maxlength="140" placeholder="Nombre de tu negocio"></label><label>¿En qué estás pensando?<select name="interes"><option value="">Elegí una opción</option><option>Empleado digital</option><option>Proyecto a medida</option><option>Lokation</option><option>Zyro</option><option>Toki</option><option>Quiero conocer más</option></select></label><label>Contanos qué está pasando <span aria-hidden="true">*</span><textarea name="mensaje" rows="4" required minlength="15" maxlength="3000" placeholder="¿Qué tarea te lleva tiempo o qué proceso querés mejorar?"></textarea></label><label class="checkbox"><input name="consentimiento" type="checkbox" required><span>Leí la <a href="/privacidad/">política de privacidad</a> y acepto compartir estos datos para conversar sobre mi consulta.</span></label><button class="button black" type="submit">Preparar consulta ${arrow}</button><p class="form-note">Se abrirá tu aplicación de correo con el mensaje listo. Revisalo y enviá desde allí.</p><p id="form-status" class="form-status" role="status"></p><div id="form-fallback" hidden><button class="text-link" id="copy-message" type="button">Copiar mensaje</button><a class="text-link" id="download-message" download="consulta-koi.txt">Descargar consulta</a></div></form><noscript><p>Para preparar el mensaje desde el formulario necesitás JavaScript. También podés escribir directamente a <a href="mailto:${config.email}">${config.email}</a>.</p></noscript></div></section>`));
-await writePage('/privacidad/', shell('Privacidad — Koi Studio', 'Cómo se manejan los datos que compartís al contactar a Koi Studio desde este sitio.', '/privacidad/', `<section class="wrap legal page-intro">${label('INFORMACIÓN CLARA')}<h1>Tu información,<br>con <em>cuidado.</em></h1><p>Las tipografías y los recursos visuales se sirven desde el propio sitio. Utilizamos Microsoft Clarity para entender cómo se navega por nuestras páginas y mejorar la experiencia mediante mapas de calor y grabaciones de sesiones. Clarity puede procesar interacciones, datos técnicos del dispositivo y cookies de analítica según su configuración y las preferencias de consentimiento. El contenido del formulario está enmascarado para Clarity. Podés consultar más información en la <a href="https://privacy.microsoft.com/es-es/privacystatement" target="_blank" rel="noopener noreferrer">declaración de privacidad de Microsoft</a>.</p><h2>Cuando completás el formulario</h2><p>Los datos se usan en tu navegador para preparar una consulta en tu aplicación de correo. No se envían automáticamente ni se guardan en una base de datos de este sitio. Podés revisar el mensaje antes de enviarlo. Si lo enviás, compartís esa información con Koi Studio por correo electrónico para responder tu consulta.</p><h2>Enlaces externos</h2><p>Instagram y tu proveedor de correo funcionan bajo sus propias políticas de privacidad. El proveedor de alojamiento puede procesar registros técnicos necesarios para servir y proteger el sitio.</p><h2>Contacto sobre tus datos</h2><p>Podés consultar sobre el tratamiento o solicitar la eliminación de información que hayas enviado escribiendo a <a href="mailto:${config.email}">${config.email}</a>.</p></section>`));
-await writePage('/404.html', shell('Página no encontrada — Koi Studio', 'Esta página no está disponible. Volvé al inicio o explorá los proyectos de Koi Studio.', '/404.html', `<section class="wrap error-page">${label('404 / FUERA DEL RECORRIDO')}<div class="error-number" aria-hidden="true">4<span>0</span>4</div><h1>Esto también<br>se puede <em>ordenar.</em></h1><p>La página que buscás no existe o cambió de lugar.<br>Volvamos a un buen punto de partida.</p><div class="hero-actions">${btn('Volver al inicio','/','orange')}<a class="text-link" href="/proyectos/">Explorar proyectos ↗</a></div></section>`, { noindex: true }));
-const routes = ['/', '/proyectos/', ...projects.map(p => `/proyectos/${p.slug}/`), '/contacto/', '/privacidad/'];
-await writeFile(path.join(out, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${routes.map(r => `<url><loc>${config.url}${r}</loc></url>`).join('')}</urlset>`);
-await writeFile(path.join(out, 'robots.txt'), `User-agent: *\nAllow: /\nDisallow: /404.html\nSitemap: ${config.url}/sitemap.xml\n`);
-const llms = `# Koi Studio\n\n> ${config.description}\n\nSitio oficial: ${config.url}\nIdioma: español rioplatense.\nContacto: ${config.email}\nInstagram: ${config.instagram}\n\n## Páginas\n\n- [Inicio](${config.url}/): estudio, servicios, clientes y proceso.\n- [Proyectos](${config.url}/proyectos/): productos propios y clientes.\n${projects.map(p => `- [${p.name}](${config.url}/proyectos/${p.slug}/): ${p.description}`).join('\n')}\n- [Contacto](${config.url}/contacto/): email, Instagram y formulario para preparar un correo.\n\n## Criterio de información\n\nLos productos propios se describen por su territorio de trabajo. No inferir disponibilidad, integraciones, métricas ni resultados de clientes. Los alcances se confirman con Koi Studio.\nClientes identificados por el estudio: ${clients.map(c=>c.name).join(', ')}.\n`;
-await writeFile(path.join(out,'llms.txt'),llms);
-await writeFile(path.join(out,'llm.txt'),llms);
-await writeFile(path.join(out,'_headers'), '/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n  X-Frame-Options: DENY\n  Permissions-Policy: camera=(), microphone=(), geolocation=()\n/assets/*\n  Cache-Control: public, max-age=86400\n');
-console.log(`Sitio generado: ${out} (${routes.length + 1} páginas)`);
-async function writePage(route, html) { const filename = route.endsWith('.html') ? path.join(out, route.slice(1)) : path.join(out, route, 'index.html'); await mkdir(path.dirname(filename), {recursive:true}); await writeFile(filename, html); }
+
+await rm(out, { recursive: true, force: true });
+await mkdir(out, { recursive: true });
+await cp(path.join(root, 'assets'), path.join(out, 'assets'), { recursive: true });
+for (const file of ['styles.css', 'app.js', 'analytics.js']) {
+  await cp(path.join(root, 'src', file), path.join(out, 'assets', file));
+}
+await cp(path.join(root, 'assets/brand/favicon.ico'), path.join(out, 'favicon.ico'));
+for (const [route, title, description, body] of pages) {
+  const directory = path.join(out, route);
+  await mkdir(directory, { recursive: true });
+  await writeFile(path.join(directory, 'index.html'), shell(title, description, route, body));
+}
+await mkdir(path.join(out, 'privacidad'));
+await writeFile(path.join(out, 'privacidad/index.html'), shell('Privacidad | Koi Studio', 'Información sobre el uso de datos.', '/privacidad/', `<section class="inner-intro"><div class="wrap legal"><h1>Privacidad</h1><p>Usamos Microsoft Clarity en el sitio público para mejorar la experiencia mediante mapas de calor y grabaciones de sesiones. Clarity puede procesar interacciones, datos técnicos del dispositivo y cookies según su configuración y las preferencias de consentimiento. Podés consultar la <a href="https://privacy.microsoft.com/es-es/privacystatement">declaración de privacidad de Microsoft</a>.</p><p>Si nos escribís por WhatsApp, usamos lo que compartís para responder tu consulta. Para consultas sobre tus datos, escribinos a <a href="mailto:${escape(config.email)}">${escape(config.email)}</a>.</p></div></section>`));
+await writeFile(path.join(out, '404.html'), shell('Página no encontrada | Koi Studio', 'Volvé al inicio de Koi Studio.', '/404.html', `<section class="inner-intro"><div class="wrap">${note('404')}<h1>Página no encontrada</h1>${button('Volver al inicio', '/')}</div></section>`, false));
+await writeFile(path.join(out, 'robots.txt'), 'User-agent: *\nAllow: /\nSitemap: ' + config.url + '/sitemap.xml\n');
+await writeFile(path.join(out, 'sitemap.xml'), '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' +
+  [...pages.map(page => page[0]), '/privacidad/'].map(route => '<url><loc>' + escape(config.url + route) + '</loc></url>').join('') + '</urlset>\n');
