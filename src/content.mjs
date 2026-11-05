@@ -45,7 +45,7 @@ export const projects = [
   },
   {
     slug: 'estudio-guzman', name: 'Estudio Guzmán Abogados Asociados', sector: 'Estudio jurídico · Sistema interno a medida',
-    label: 'Sistema interno a medida', logo: 'estudio-guzman.png',
+    label: 'Sistema interno a medida', logo: 'estudio-guzman.png', darkLogoSource: true,
     scene: '«¿Quién lleva este expediente y qué vence esta semana?»',
     description: 'Armamos un sistema donde el equipo puede abrir un expediente y ver quién lo lleva, cuál fue la última actuación y qué tareas quedan pendientes. Cada tarea tiene responsable y vencimiento, y desde un tablero común se ve cómo está repartido el trabajo.',
   },

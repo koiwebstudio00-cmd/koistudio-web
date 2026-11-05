@@ -77,8 +77,11 @@ p,figure{margin:0}
 .scene,.card-content p.scene,.case-copy>p.scene{font-weight:800;color:inherit;margin-bottom:10px}
 .case-card{background:#151413;border-color:#39332e}
 .case-card p:not(.eyebrow){color:#c5bfbb}
-.case-logo{background:#fff;display:grid;place-items:center;overflow:hidden;border-radius:5px;width:128px;height:66px;margin-bottom:18px}
-.case-logo img{width:100%;height:100%;object-fit:contain}
+.logo-filters{position:absolute;pointer-events:none}
+.case-logo{display:flex;align-items:center;justify-content:center;overflow:hidden;width:150px;max-width:100%;height:105px;margin-bottom:12px}
+.case-logo img{width:100%;max-width:150px;height:auto;flex-shrink:0;filter:url(#logo-white-from-light)}
+.case-logo[data-dark-source="true"] img{filter:url(#logo-white-from-dark)}
+.case-detail .case-logo{width:182px;padding-inline:16px;border-radius:5px;background:var(--ink)}
 .section-action,.workshop-end{margin-top:27px}
 .workshop-end p{max-width:740px;color:#494845;margin-bottom:17px}
 .closing{background:var(--orange);color:var(--ink);padding:78px 0}

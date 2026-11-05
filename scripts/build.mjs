@@ -62,6 +62,16 @@ function shell(title, description, route, content, index = true) {
 <script src="/assets/analytics.js" defer></script>
 </head>
 <body>
+<svg class="logo-filters" width="0" height="0" aria-hidden="true" focusable="false">
+  <defs>
+    <filter id="logo-white-from-light" color-interpolation-filters="sRGB" x="0" y="0" width="100%" height="100%">
+      <feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  -.4252 -1.4304 -.1444 2 0" />
+    </filter>
+    <filter id="logo-white-from-dark" color-interpolation-filters="sRGB" x="0" y="0" width="100%" height="100%">
+      <feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  .4252 1.4304 .1444 -.65 0" />
+    </filter>
+  </defs>
+</svg>
 <a class="skip" href="#contenido">Ir al contenido</a>
 <header class="header">
   <div class="wrap header-inner">
@@ -82,7 +92,7 @@ function shell(title, description, route, content, index = true) {
 
 const heading = (label, title) => `<div class="section-heading" data-enter>${note(label)}<h2>${escape(title)}</h2></div>`;
 const illustration = product => `<img src="${asset(product.image)}" alt="${escape(product.alt)}" width="1254" height="1254" loading="lazy">`;
-const clientLogo = project => `<div class="case-logo"><img src="${asset('clients/' + project.logo)}" alt="${escape(project.name)}" loading="lazy"></div>`;
+const clientLogo = project => `<div class="case-logo"${project.darkLogoSource ? ' data-dark-source="true"' : ''}><img src="${asset('clients/' + project.logo)}" alt="" loading="lazy"></div>`;
 const closing = `<section class="closing"><div class="wrap" data-enter>
   ${note('04 / HABLEMOS')}
   <h2>¿Qué tarea te gustaría dejar de hacer a mano?</h2>
