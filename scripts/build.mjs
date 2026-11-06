@@ -31,7 +31,7 @@ async function media(file, title, pending, id = '') {
   return `<figure class="media-slot ${available ? 'available' : 'pending'}"${id ? ` id="${id}"` : ''}>
     <figcaption><span class="status-dot"></span>${escape(title)}</figcaption>
     ${available ? video
-      ? `<video controls playsinline preload="none" src="${asset(file)}" aria-label="${escape(title)}"></video>`
+      ? `<video controls playsinline preload="none" poster="${asset(file.replace(/\.mp4$/, '-poster.jpg'))}" src="${asset(file)}" aria-label="${escape(title)}"></video>`
       : `<img src="${asset(file)}" alt="${escape(title)}" loading="lazy">`
       : `<div class="media-empty"><span class="media-icon" aria-hidden="true">${video ? '◎' : '⊞'}</span><p>${escape(pending)}</p></div>`}
   </figure>`;
