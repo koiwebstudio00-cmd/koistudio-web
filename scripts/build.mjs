@@ -13,6 +13,10 @@ const whatsapp = message => 'https://wa.me/5493815709287' + (message ? '?text=' 
 const arrow = '<span aria-hidden="true">↗</span>';
 const button = (label, href, style = 'primary', glyph = arrow) =>
   `<a class="button ${style}" href="${escape(href)}">${escape(label)}${glyph}</a>`;
+const shaderCanvas = (theme, animated = false) =>
+  `<canvas data-shader="${theme}"${animated ? ' data-shader-motion' : ''} aria-hidden="true"></canvas>`;
+const shaderButton = (label, href, animated = false) =>
+  button(label, href, 'primary button-grain', arrow + shaderCanvas('orange', animated));
 const note = text => `<p class="eyebrow">${escape(text)}</p>`;
 const productPath = product => '/productos/' + product.slug + '/';
 const projectPath = slug => '/proyectos/#' + slug;
@@ -60,7 +64,7 @@ function shell(title, description, route, content, index = true) {
 <link rel="stylesheet" href="/assets/styles.css">
 <script type="application/ld+json">${JSON.stringify(organization).replace(/</g, "\\u003c")}</script>
 <script type="module" src="/assets/app.js"></script>
-${route === '/' ? '<script type="module" src="/assets/waves-shader.js"></script>' : ''}
+${route === '/' || route === '/proyectos/' || route.startsWith('/productos/') ? '<script type="module" src="/assets/hero-shader.js"></script>' : ''}
 <script src="/assets/analytics.js" defer></script>
 </head>
 <body>
@@ -93,38 +97,54 @@ ${route === '/' ? '<script type="module" src="/assets/waves-shader.js"></script>
 }
 
 const heading = (label, title, accent = '') => `<div class="section-heading" data-enter>${note(label)}<h2>${escape(title)}${accent ? ` <em class="editorial">${escape(accent)}</em>` : ''}</h2></div>`;
-const illustration = product => `<img src="${asset(product.image)}" alt="${escape(product.alt)}" width="1254" height="1254" loading="lazy">`;
+const productImage = (image, alt, lazy = false, height = 800) =>
+  `<img src="${asset(image)}" alt="${escape(alt)}" width="800" height="${height}"${lazy ? ' loading="lazy"' : ''}>`;
+const illustration = product => `<div class="vertical-art detail-art" data-art-theme="${product.artTheme}" data-vertical="${product.slug}">
+  ${shaderCanvas(product.artTheme)}
+  ${productImage(product.image, product.alt)}
+</div>`;
 const clientLogo = project => `<div class="case-logo"${project.darkLogoSource ? ' data-dark-source="true"' : ''}><img src="${asset('clients/' + project.logo)}" alt="" loading="lazy"></div>`;
-const closing = `<section class="closing"><div class="wrap" data-enter>
+const closing = `<section class="closing">${shaderCanvas('orange')}<div class="wrap" data-enter>
   ${note('04 / HABLEMOS')}
   <h2>¿Qué tarea te gustaría <em class="editorial">dejar de hacer a mano?</em></h2>
   <p>Contanos cómo la resuelven hoy. Con un ejemplo alcanza para empezar a hablar.</p>
   ${button('Escribinos por WhatsApp', contact, 'black')}
 </div></section>`;
-const intro = `<section class="hero"><div class="hero-waves" aria-hidden="true"><canvas id="hero-waves"></canvas></div><div class="wrap">
-  <div class="hero-main">
-    <div class="hero-copy" data-enter>
-      ${note('KOI STUDIO / EMPLEADOS DIGITALES')}
-      <h1>Armamos <em class="editorial">empleados digitales</em> para que no tengas que estar en todo.</h1>
-      <p>Atienden consultas, toman pedidos y retoman conversaciones de venta. Los armamos con tus precios, tus horarios y tus reglas, para que resuelvan lo de todos los días y te pasen lo que necesita tu atención.</p>
-      <div class="actions">${button('Ver cómo funciona', '#vsl', 'secondary', '<span aria-hidden="true">↓</span>')}${button('Hablemos por WhatsApp', whatsapp())}</div>
+const intro = `<section class="hero">
+  <div class="hero-stage">
+    <div class="hero-backdrop" aria-hidden="true">${shaderCanvas('dark', true)}</div>
+    <div class="wrap">
+      <div class="hero-copy" data-enter>
+        ${note('KOI STUDIO / EMPLEADOS DIGITALES')}
+        <h1>Armamos <em class="editorial">empleados digitales</em> para que no tengas que estar en todo.</h1>
+        <p>Atienden consultas, toman pedidos y retoman conversaciones de venta. Los armamos con tus precios, tus horarios y tus reglas, para que resuelvan lo de todos los días y te pasen lo que necesita tu atención.</p>
+        <div class="actions">${button('Ver cómo funciona', '#vsl', 'secondary', '<span aria-hidden="true">↓</span>')}${shaderButton('Hablemos por WhatsApp', whatsapp())}</div>
+      </div>
     </div>
-    <div class="hero-art" aria-hidden="true"><img src="/assets/hero-v2.jpg" width="1536" height="1024" alt=""></div>
   </div>
-  ${await media('media/koi-vsl.mp4', 'KOI STUDIO / CÓMO FUNCIONA', 'Video en preparación', 'vsl')}
-</div></section>`;
+  <div class="wrap vsl-reveal" id="vsl">
+    ${await media('media/koi-vsl.mp4', 'KOI STUDIO / CÓMO FUNCIONA', 'Video en preparación')}
+  </div>
+</section>`;
 const beamVariants = ['quick', 'slow', 'thick'];
-const productCards = products.map((product, index) => `<article class="product-card" data-beam="${beamVariants[index]}" data-enter>
-  <div class="product-art">${illustration(product)}<span aria-hidden="true">0${index + 1}</span></div>
-  <div class="card-content">${note(product.sector)}<h3>${product.name}</h3><p class="scene">${escape(product.scene)}</p><p>${escape(product.description)}</p>
-  ${button('Conocé ' + product.name, productPath(product), 'text-button')}</div>
+const productCards = products.map((product, index) => `<article class="product-card" data-beam="${beamVariants[index]}" data-enter="card">
+  <div class="vertical-art glass-card-surface" data-art-theme="dark" data-vertical="${product.slug}">
+    ${shaderCanvas('dark')}
+    <div class="product-art">${productImage(product.cardImage ?? product.image, product.cardAlt ?? product.alt, true, product.cardImageHeight)}<span aria-hidden="true">0${index + 1}</span></div>
+    <div class="card-content">${note(product.sector)}<h3>${escape(product.name)}</h3><p class="scene">${escape(product.scene)}</p><p>${escape(product.description)}</p>
+    ${button('Conocé ' + product.name, productPath(product), 'product-link')}</div>
+  </div>
 </article>`).join('');
-const featured = projects.slice(0, 3).map((project, index) => `<article class="case-card" data-beam="${beamVariants[index]}" data-beam-reveal data-enter>
+const featured = projects.slice(0, 3).map((project, index) => `<article class="case-card" data-beam="${beamVariants[index]}" data-beam-reveal data-enter="card">
   ${clientLogo(project)}${note(project.label)}<h3>${escape(project.name)}</h3>
   <p>${escape(project.summary)}</p>${button('Ver el caso', projectPath(project.slug), 'text-button')}
 </article>`).join('');
-const workshopCards = workshops.map((workshop, index) => `<article class="workshop-card" data-beam="${index === 0 ? 'quick' : 'slow'}" data-beam-reveal data-enter>
-  ${note(workshop.length)}<h3>${escape(workshop.title)}</h3><p>${escape(workshop.description)}</p>
+const workshopCards = workshops.map((workshop, index) => `<article class="workshop-card" data-beam="${index === 0 ? 'quick' : 'slow'}" data-beam-reveal data-enter="card">
+  <div class="vertical-art glass-card-surface" data-art-theme="light">
+    ${shaderCanvas('light')}
+    <div class="workshop-art"><img src="${asset(workshop.image)}" alt="${escape(workshop.alt)}" width="1340" height="755" loading="lazy"></div>
+    <div class="card-content">${note(workshop.length)}<h3>${escape(workshop.title)}</h3><p>${escape(workshop.description)}</p></div>
+  </div>
 </article>`).join('');
 const home = `${intro}
 <section class="section light" id="productos"><div class="wrap">
@@ -134,14 +154,14 @@ const home = `${intro}
 <section class="section grid-bg"><div class="wrap">
   ${heading('02 / PROYECTOS', 'Así se usa', 'lo que hacemos.')}
   <div class="three-up">${featured}</div>
-  <div class="section-action">${button('Ver todos los proyectos', '/proyectos/', 'secondary')}</div>
+  <div class="section-action">${shaderButton('Ver todos los proyectos', '/proyectos/', true)}</div>
 </div></section>
 <section class="section light" id="workshops"><div class="wrap">
   ${heading('03 / WORKSHOPS', 'Probemos la IA con algo que tu equipo', 'ya hace todos los días.')}
   <p class="section-lead">Traigan una tarea de verdad. Un presupuesto que siempre arranca de cero, un informe que lleva media mañana o las mismas preguntas que el equipo responde cada semana. Sobre eso trabajamos.</p>
   <div class="two-up">${workshopCards}</div>
   <div class="workshop-end"><p>Si quieren seguir, podemos hacer un relevamiento completo de la empresa. Con eso les presentamos una propuesta que explica qué desarrollaríamos, qué procesos automatizaríamos y cuánto costaría por mes mantenerlo funcionando.</p>
-  ${button('Hablemos de un workshop', whatsapp('Hola, equipo de Koi. Quiero saber cómo sería un workshop para mi equipo.'))}</div>
+  ${shaderButton('Hablemos de un workshop', whatsapp('Hola, equipo de Koi. Quiero saber cómo sería un workshop para mi equipo.'), true)}</div>
 </div></section>${closing}`;
 
 const cases = await Promise.all(projects.map(async (project, index) => `<article class="case-detail" id="${project.slug}">
@@ -158,12 +178,12 @@ const pages = [
   ['/proyectos/', 'Proyectos | Koi Studio', 'Conocé cómo se usan las soluciones de Koi Studio en distintos equipos.', portfolio],
 ];
 for (const product of products) {
-  const demo = product.slug === 'toki-ai' ? 'Demo de Toki AI' : 'Captura de ' + product.name;
+  const demo = (product.slug === 'toki-ai' ? 'Demo de ' : 'Captura de ') + product.name;
   const body = `<section class="grid-bg inner-intro"><div class="wrap product-detail">
     <div data-enter><a class="back" href="/#productos">← Productos</a>${note(product.sector)}
     <h1>${product.name}</h1><p class="scene">${escape(product.scene)}</p><p>${escape(product.description)}</p>
     <div class="actions">${button('Hablemos de ' + product.name, whatsapp('Hola, equipo de Koi. Quiero saber cómo podría usar ' + product.name + ' en mi empresa.'))}</div></div>
-    <div class="detail-art">${illustration(product)}</div>
+    ${illustration(product)}
   </div></section>
   <section class="section light"><div class="wrap">
     ${heading('PRODUCTO / ' + product.name.toUpperCase(), demo)}
@@ -176,7 +196,7 @@ for (const product of products) {
 await rm(out, { recursive: true, force: true });
 await mkdir(out, { recursive: true });
 await cp(path.join(root, 'assets'), path.join(out, 'assets'), { recursive: true });
-for (const file of ['styles.css', 'app.js', 'analytics.js', 'waves-shader.js']) {
+for (const file of ['styles.css', 'app.js', 'analytics.js', 'hero-shader.js']) {
   await cp(path.join(root, 'src', file), path.join(out, 'assets', file));
 }
 const lenis = path.join(root, 'node_modules/lenis');

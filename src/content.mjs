@@ -1,21 +1,24 @@
 export const products = [
   {
-    slug: 'zyro-ai', name: 'Zyro AI', sector: 'Para concesionarias',
-    image: 'zyro-v2.jpg', alt: 'Ilustración de un auto plateado con detalles naranjas',
+    slug: 'zyro-ai', name: 'Zyro', sector: 'Para concesionarias',
+    image: 'verticales/zyro-vidrio.webp', artTheme: 'dark', alt: 'Auto de vidrio esmerilado naranja',
+    cardImage: 'verticales/zyro-frosted.webp', cardAlt: 'Coupé deportivo de vidrio esmerilado naranja visto de tres cuartos', cardImageHeight: 534,
     scene: 'Sábado, nueve de la noche. «Hola, ¿sigue disponible?»',
     description: 'Es el mismo auto por el que te preguntaron toda la semana. Zyro consulta el stock, responde por WhatsApp y le pasa la conversación a tu equipo si el cliente quiere avanzar.',
     project: 'gentile-autos', projectLabel: 'Ver catálogo y gestión de stock en Gentile Autos',
   },
   {
-    slug: 'cubiko-ai', name: 'Cubiko AI', sector: 'Para inmobiliarias',
-    image: 'lokation-v2.jpg', alt: 'Ilustración de un edificio y una llave naranja',
+    slug: 'cubiko-ai', name: 'Cubiko', sector: 'Para inmobiliarias',
+    image: 'verticales/cubiko-vidrio.webp', artTheme: 'orange', alt: 'Casa de vidrio esmerilado con techo naranja',
+    cardImage: 'verticales/cubiko-frosted.webp', cardAlt: 'Casa moderna de dos pisos de vidrio esmerilado naranja', cardImageHeight: 744,
     scene: 'Estás mostrando un departamento y te escriben por otro.',
     description: 'Mientras seguís con la visita, Cubiko responde la consulta con la información de la propiedad y se la pasa al vendedor que corresponde.',
     project: 'lamelas-chaumont', projectLabel: 'Ver la implementación en Lamelas & Chaumont',
   },
   {
-    slug: 'toki-ai', name: 'Toki AI', sector: 'Para negocios gastronómicos',
-    image: 'toki-v2.jpg', alt: 'Ilustración de una bolsa de pedidos sobre fondo naranja',
+    slug: 'toki-ai', name: 'Toki', sector: 'Para negocios gastronómicos',
+    image: 'verticales/toki-vidrio.webp', artTheme: 'dark', alt: 'Bolsa de vidrio esmerilado naranja con un recibo',
+    cardImage: 'verticales/toki-frosted.webp', cardAlt: 'Bolsa de entrega de vidrio esmerilado naranja',
     scene: 'Tenés las manos en la plancha y entran tres pedidos juntos.',
     description: 'Toki muestra el menú y toma los pedidos por WhatsApp. A vos te llegan a un tablero donde podés ver qué falta preparar y qué ya está listo.',
   },
@@ -54,10 +57,12 @@ export const projects = [
 export const workshops = [
   {
     title: 'Workshop inicial', length: 'Una sesión',
+    image: 'workshops/inicial.webp', alt: 'Un instructor presenta herramientas de IA a un equipo reunido alrededor de una mesa',
     description: 'Le enseñamos a tu equipo a usar herramientas como ChatGPT o Claude con ejemplos de su propio trabajo. Se llevan prompts listos para usar y una revisión rápida de sus procesos para identificar qué tareas pueden empezar a automatizar por su cuenta.',
   },
   {
     title: 'Workshop aplicado', length: 'Dos sesiones',
+    image: 'workshops/aplicado.webp', alt: 'Un equipo revisa un flujo de automatización en pantalla junto al instructor',
     description: 'Trabajamos sobre la misma base y nos metemos más a fondo en tareas puntuales de tu empresa. Cuando el proceso lo permite, dejamos alguna herramienta configurada para que el equipo pueda usarla después del workshop.',
   },
 ];
