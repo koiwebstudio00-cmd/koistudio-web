@@ -44,25 +44,38 @@ document.addEventListener('click', event => {
 
 const menuButton = document.querySelector('.menu-toggle');
 const mobileNav = document.querySelector('#mobile-nav');
+const productMenus = document.querySelectorAll('.product-menu');
 
 function setMenu(open) {
   menuButton.setAttribute('aria-expanded', String(open));
   menuButton.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
   mobileNav.hidden = !open;
+  if (!open) mobileNav.querySelector('.product-menu').open = false;
 }
 
 menuButton.addEventListener('click', () => setMenu(mobileNav.hidden));
 mobileNav.addEventListener('click', event => {
   if (event.target.closest('a')) setMenu(false);
 });
+document.addEventListener('click', event => {
+  for (const menu of productMenus) {
+    if (!menu.contains(event.target)) menu.open = false;
+  }
+});
 document.addEventListener('keydown', event => {
-  if (event.key === 'Escape' && !mobileNav.hidden) {
+  if (event.key !== 'Escape') return;
+  const openMenu = Array.from(productMenus).find(menu => menu.open && menu.getClientRects().length);
+  if (openMenu) {
+    openMenu.open = false;
+    openMenu.querySelector('summary').focus();
+  } else if (!mobileNav.hidden) {
     setMenu(false);
     menuButton.focus();
   }
 });
-matchMedia('(min-width: 701px)').addEventListener('change', event => {
-  if (event.matches) setMenu(false);
+matchMedia('(min-width: 701px)').addEventListener('change', () => {
+  setMenu(false);
+  for (const menu of productMenus) menu.open = false;
 });
 
 if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {

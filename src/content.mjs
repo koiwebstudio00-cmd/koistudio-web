@@ -11,6 +11,12 @@ export const products = [
     slug: 'cubiko-ai', name: 'Cubiko', sector: 'Para inmobiliarias',
     image: 'verticales/cubiko-vidrio.webp', artTheme: 'orange', alt: 'Casa de vidrio esmerilado con techo naranja',
     cardImage: 'verticales/cubiko-frosted.webp', cardAlt: 'Casa moderna de dos pisos de vidrio esmerilado naranja', cardImageHeight: 744,
+    heroTitle: 'Seguí con la visita.', heroAccent: 'Cubiko atiende la consulta.',
+    steps: [
+      ['Entra una consulta', 'Una persona pregunta por otra propiedad mientras estás en una visita.'],
+      ['Cubiko responde', 'Le da información de la propiedad que le interesa.'],
+      ['El vendedor recibe la conversación', 'Cubiko deriva la consulta a quien corresponde para que pueda seguirla.'],
+    ],
     scene: 'Estás mostrando un departamento y te escriben por otro.',
     description: 'Mientras seguís con la visita, Cubiko responde la consulta con la información de la propiedad y se la pasa al vendedor que corresponde.',
     project: 'lamelas-chaumont', projectLabel: 'Ver la implementación en Lamelas & Chaumont',
