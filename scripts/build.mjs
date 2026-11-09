@@ -43,6 +43,12 @@ const menu = route => `<details class="product-menu"><summary>Productos<svg aria
 const whatsappIcon = `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.372-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.262.489 1.694.626.712.226 1.36.194 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347M12.012 22h-.004a9.95 9.95 0 0 1-5.071-1.389l-.364-.215-3.772.989 1.007-3.677-.237-.377a9.94 9.94 0 0 1-1.523-5.303C2.05 6.527 6.52 2.054 12.015 2.054a9.9 9.9 0 0 1 7.043 2.921 9.9 9.9 0 0 1 2.916 7.049C21.971 17.526 17.501 22 12.012 22m8.48-18.434A11.9 11.9 0 0 0 12.015.05C5.407.05.029 5.426.026 12.034c0 2.112.551 4.173 1.599 5.99L0 23.95l6.065-1.591a12 12 0 0 0 5.943 1.515h.005c6.606 0 11.985-5.377 11.988-11.984a11.9 11.9 0 0 0-3.51-8.324"/></svg>`;
 const brand = `<a class="brand" href="/" aria-label="Koi Studio, inicio"><img src="/assets/brand/koi-symbol.png" width="38" height="38" alt=""><span>Koi Studio<small>AI &amp; SOFTWARE</small></span></a>`;
 const asset = name => '/assets/' + name;
+const socialCards = {
+  'zyro-ai': { file: 'social/zyro.jpg', alt: 'Zyro AI para concesionarias. Catálogo web, stock y atención con IA por WhatsApp y redes.' },
+  'cubiko-ai': { file: 'social/cubiko.jpg', alt: 'Cubiko AI para inmobiliarias. Publicá propiedades y atendé con IA. Gestioná visitas y alquileres.' },
+  'toki-ai': { file: 'social/toki.jpg', alt: 'Toki para locales gastronómicos. Menú web y pedidos por WhatsApp. Cocina y mostrador en un lugar.' },
+};
+const defaultSocialCard = { file: 'social-card.jpg', alt: 'Koi Studio. Tu negocio, en otra escala. Empleados digitales y software.' };
 
 async function media(file, title, pending, id = '') {
   const available = await stat(path.join(root, 'assets', file)).then(info => info.isFile(), () => false);
@@ -60,7 +66,8 @@ function shell(title, description, route, content, index = true) {
   const canonical = config.url + route;
   const product = products.find(item => productPath(item) === route);
   const headerContact = productDetails[product?.slug]?.contact ?? whatsapp();
-  const social = config.url + '/assets/social-card.jpg';
+  const social = socialCards[product?.slug] ?? defaultSocialCard;
+  const socialUrl = config.url + asset(social.file);
   const organization = { '@context': 'https://schema.org', '@type': 'Organization', name: config.name, url: config.url, logo: config.url + '/assets/brand/logo-black.png', email: config.email, sameAs: [config.instagram].filter(Boolean) };
   return `<!doctype html>
 <html lang="es-AR">
@@ -72,15 +79,20 @@ function shell(title, description, route, content, index = true) {
 <meta name="theme-color" content="#0b0b0b">
 <meta name="robots" content="${index ? 'index, follow' : 'noindex, follow'}">
 <link rel="canonical" href="${escape(canonical)}">
-<link rel="icon" href="/favicon.ico">
+<link rel="icon" href="/favicon.ico?v=2">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="es_AR">
 <meta property="og:title" content="${escape(title)}">
 <meta property="og:description" content="${escape(description)}">
 <meta property="og:url" content="${escape(canonical)}">
-<meta property="og:image" content="${escape(social)}">
+<meta property="og:image" content="${escape(socialUrl)}">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="${escape(social.alt)}">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="${escape(social)}">
+<meta name="twitter:image" content="${escape(socialUrl)}">
+<meta name="twitter:image:alt" content="${escape(social.alt)}">
 <link rel="stylesheet" href="/assets/lenis.css">
 <link rel="stylesheet" href="/assets/styles.css">
 <script type="application/ld+json">${JSON.stringify(organization).replace(/</g, "\\u003c")}</script>

@@ -7,7 +7,7 @@ try {
     $bitmap = [System.Drawing.Bitmap]::new($size,$size)
     $graphics = [System.Drawing.Graphics]::FromImage($bitmap)
     try {
-      $graphics.Clear([System.Drawing.ColorTranslator]::FromHtml('#0B0B0B'))
+      $graphics.Clear([System.Drawing.Color]::Transparent)
       $graphics.InterpolationMode = [System.Drawing.Drawing2D.InterpolationMode]::HighQualityBicubic
       $graphics.PixelOffsetMode = [System.Drawing.Drawing2D.PixelOffsetMode]::HighQuality
       $inset = [int][Math]::Round($size * 0.14)
