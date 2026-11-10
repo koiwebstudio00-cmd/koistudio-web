@@ -45,19 +45,29 @@ document.addEventListener('click', event => {
 const menuButton = document.querySelector('.menu-toggle');
 const mobileNav = document.querySelector('#mobile-nav');
 const productMenus = document.querySelectorAll('.product-menu');
+const header = menuButton.closest('.header');
+
+function syncHeader() {
+  header.toggleAttribute('data-compact', window.scrollY > 56);
+}
+
+window.addEventListener('scroll', syncHeader, { passive: true });
+window.addEventListener('pageshow', syncHeader);
+syncHeader();
 
 function setMenu(open) {
   menuButton.setAttribute('aria-expanded', String(open));
   menuButton.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
-  mobileNav.hidden = !open;
+  mobileNav.inert = !open;
   if (!open) mobileNav.querySelector('.product-menu').open = false;
 }
 
-menuButton.addEventListener('click', () => setMenu(mobileNav.hidden));
+menuButton.addEventListener('click', () => setMenu(mobileNav.inert));
 mobileNav.addEventListener('click', event => {
   if (event.target.closest('a')) setMenu(false);
 });
 document.addEventListener('click', event => {
+  if (!mobileNav.inert && !mobileNav.contains(event.target) && !menuButton.contains(event.target)) setMenu(false);
   for (const menu of productMenus) {
     if (!menu.contains(event.target)) menu.open = false;
   }
@@ -68,7 +78,7 @@ document.addEventListener('keydown', event => {
   if (openMenu) {
     openMenu.open = false;
     openMenu.querySelector('summary').focus();
-  } else if (!mobileNav.hidden) {
+  } else if (!mobileNav.inert) {
     setMenu(false);
     menuButton.focus();
   }
@@ -77,6 +87,42 @@ matchMedia('(min-width: 701px)').addEventListener('change', () => {
   setMenu(false);
   for (const menu of productMenus) menu.open = false;
 });
+
+const caseViewer = document.querySelector('.case-viewer');
+if (caseViewer) {
+  const image = caseViewer.querySelector('img');
+  const caption = caseViewer.querySelector('p');
+  let slides = [];
+  let index = 0;
+
+  function showSlide(nextIndex) {
+    index = (nextIndex + slides.length) % slides.length;
+    const link = slides[index];
+    image.src = link.href;
+    image.alt = link.querySelector('img').alt;
+    caption.textContent = `${link.nextElementSibling.querySelector('h3').textContent} · ${index + 1} de ${slides.length}`;
+  }
+
+  document.querySelectorAll('.case-gallery').forEach(gallery => {
+    gallery.addEventListener('click', event => {
+      const link = event.target.closest('a');
+      if (!link || event.button !== 0 || event.metaKey || event.ctrlKey || event.altKey || event.shiftKey) return;
+      event.preventDefault();
+      slides = Array.from(gallery.querySelectorAll('a'));
+      showSlide(slides.indexOf(link));
+      caseViewer.showModal();
+    });
+  });
+  caseViewer.querySelector('button[autofocus]').addEventListener('click', () => caseViewer.close());
+  caseViewer.querySelectorAll('[data-step]').forEach(button => {
+    button.addEventListener('click', () => showSlide(index + Number(button.dataset.step)));
+  });
+  caseViewer.addEventListener('keydown', event => {
+    if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+    event.preventDefault();
+    showSlide(index + (event.key === 'ArrowLeft' ? -1 : 1));
+  });
+}
 
 if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
   const observer = new IntersectionObserver(entries => {

@@ -14,7 +14,6 @@ const escape = value => String(value).replace(/[&<>"']/g, char => ({
 })[char]);
 const whatsapp = message => 'https://wa.me/5493815709287' + (message ? '?text=' + encodeURIComponent(message) : '');
 const arrow = '<span aria-hidden="true">↗</span>';
-const down = '<span aria-hidden="true">↓</span>';
 const button = (label, href, style = 'primary', glyph = arrow) =>
   `<a class="button ${style}" href="${escape(href)}">${escape(label)}${glyph}</a>`;
 const shaderCanvas = (theme, animated = false) =>
@@ -39,9 +38,13 @@ const productDetails = {
 const productName = product => productDetails[product.slug]?.name ?? product.name;
 const menu = route => `<details class="product-menu"><summary>Productos<svg aria-hidden="true" viewBox="0 0 16 16" fill="none"><path d="m4 6 4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
   <div class="product-menu-links">${products.map(product => `<a href="${productPath(product)}"${route === productPath(product) ? ' aria-current="page"' : ''}>${escape(productName(product))}</a>`).join('')}</div>
-</details><a href="/proyectos/">Proyectos</a><a href="/#workshops">Workshops</a>`;
+</details><a href="/proyectos/"${route === '/proyectos/' ? ' aria-current="page"' : ''}>Proyectos y Clientes</a><a href="/#workshops">Workshops</a>`;
 const whatsappIcon = `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.372-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.262.489 1.694.626.712.226 1.36.194 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347M12.012 22h-.004a9.95 9.95 0 0 1-5.071-1.389l-.364-.215-3.772.989 1.007-3.677-.237-.377a9.94 9.94 0 0 1-1.523-5.303C2.05 6.527 6.52 2.054 12.015 2.054a9.9 9.9 0 0 1 7.043 2.921 9.9 9.9 0 0 1 2.916 7.049C21.971 17.526 17.501 22 12.012 22m8.48-18.434A11.9 11.9 0 0 0 12.015.05C5.407.05.029 5.426.026 12.034c0 2.112.551 4.173 1.599 5.99L0 23.95l6.065-1.591a12 12 0 0 0 5.943 1.515h.005c6.606 0 11.985-5.377 11.988-11.984a11.9 11.9 0 0 0-3.51-8.324"/></svg>`;
 const brand = `<a class="brand" href="/" aria-label="Koi Studio, inicio"><img src="/assets/brand/koi-symbol.png" width="38" height="38" alt=""><span>Koi Studio<small>AI &amp; SOFTWARE</small></span></a>`;
+const playIcon = `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 8.5 16 12l-6 3.5z" fill="currentColor"/></svg>`;
+const heroActions = (href, contactLabel = 'Probá gratis por WhatsApp', videoLabel = 'Ver video de la demo') =>
+  button(contactLabel, href, 'primary hero-action', whatsappIcon) +
+  button(videoLabel, '#vsl', 'secondary hero-action', playIcon);
 const asset = name => '/assets/' + name;
 const socialCards = {
   'zyro-ai': { file: 'social/zyro.jpg', alt: 'Zyro AI para concesionarias. Catálogo web, stock y atención con IA por WhatsApp y redes.' },
@@ -117,9 +120,13 @@ ${route === '/' || route === '/proyectos/' || route.startsWith('/productos/') ? 
     ${brand}
     <nav class="desktop-nav" aria-label="Principal">${menu(route)}</nav>
     <a class="button nav-cta" href="${escape(headerContact)}" aria-label="Hablemos por WhatsApp">${whatsappIcon}</a>
-    <button type="button" class="menu-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-nav"><span aria-hidden="true">☰</span></button>
+    <button type="button" class="menu-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-nav">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M4 8h16"/><path d="M4 16h16"/></svg>
+    </button>
   </div>
-  <nav id="mobile-nav" class="mobile-nav wrap" aria-label="Navegación móvil" hidden>${menu(route)}</nav>
+  <nav id="mobile-nav" class="mobile-nav" aria-label="Navegación móvil" inert>
+    <div class="mobile-nav-panel" data-lenis-prevent><div class="wrap">${menu(route)}</div></div>
+  </nav>
 </header>
 <main id="contenido">${content}</main>
 <footer class="footer">
@@ -159,7 +166,7 @@ const intro = hero({
   label: 'KOI STUDIO / EMPLEADOS DIGITALES',
   title: 'Armamos <em class="editorial">empleados digitales</em> para que no tengas que estar en todo.',
   description: 'Atienden consultas, toman pedidos y retoman conversaciones de venta. Los armamos con tus precios, tus horarios y tus reglas, para que resuelvan lo de todos los días y te pasen lo que necesita tu atención.',
-  actions: button('Ver cómo funciona', '#vsl', 'secondary', down) + shaderButton('Hablemos por WhatsApp', whatsapp()),
+  actions: heroActions(whatsapp(), 'Hablemos por WhatsApp', 'Ver el video'),
   preview: await media('media/koi-vsl.mp4', 'KOI STUDIO / CÓMO FUNCIONA', 'Video en preparación'),
 });
 const beamVariants = ['quick', 'slow', 'thick'];
@@ -200,15 +207,6 @@ const home = `${intro}
   ${shaderButton('Hablemos de un workshop', whatsapp('Hola, equipo de Koi. Quiero saber cómo sería un workshop para mi equipo.'), true)}</div>
 </div></section>${closing}`;
 
-const cases = await Promise.all(projects.map(async (project, index) => `<article class="case-detail" id="${project.slug}">
-  <div class="case-copy" data-enter>${clientLogo(project)}${note('0' + (index + 1) + ' / ' + project.sector)}
-  <h2>${escape(project.name)}</h2><p class="scene">${escape(project.scene)}</p><p>${escape(project.description)}</p></div>
-  ${await media('media/proyectos/' + project.slug + '.png', 'Captura de ' + project.name, 'Captura pendiente')}
-</article>`));
-const portfolio = `<section class="grid-bg inner-intro"><div class="wrap" data-enter>${note('PORTFOLIO / KOI STUDIO')}<h1>Así se usa lo que hacemos.</h1>
-  <nav class="case-index" aria-label="Casos del portfolio">${projects.map(project => `<a href="#${project.slug}">${escape(project.name)} ${arrow}</a>`).join('')}</nav>
-</div></section><section class="section light"><div class="wrap case-list">${cases.join('')}</div></section>${closing}`;
-
 const featureCards = items => items.map(([title, description, image]) => {
   const copy = `<h3>${escape(title)}</h3><p>${escape(description)}</p>`;
   if (!image) return `<li class="product-feature">${copy}</li>`;
@@ -220,18 +218,44 @@ const featureCards = items => items.map(([title, description, image]) => {
 const productGallery = (directory, name, items, variant = '') => `<div class="product-gallery ${variant}" data-gallery="${directory}">${items.map(([title, description, image]) => {
   const src = asset(`media/${directory}/${image}`);
   return `<figure class="product-screen">
-    <a href="${src}" target="_blank" rel="noopener" aria-label="Abrir captura de ${escape(title)} en una pestaña nueva">
+    <a href="${src}" target="_blank" rel="noopener" aria-label="Ampliar captura de ${escape(title)}">
       <img src="${src}" alt="${escape(`Captura de ${name} · ${title}`)}" loading="lazy">
     </a>
     <figcaption><h3>${escape(title)}</h3><p>${escape(description)}</p></figcaption>
   </figure>`;
 }).join('')}</div>`;
 
+const cases = projects.map((project, index) => `<article class="case-detail" id="${project.slug}">
+  <div class="case-copy" data-enter>
+    <div>${note('0' + (index + 1) + ' / ' + project.sector)}<h2>${escape(project.name)}</h2></div>
+    <div><p class="scene">${escape(project.scene)}</p><p>${escape(project.description)}</p></div>
+  </div>
+  ${productGallery(project.galleryDir, project.name, project.gallery, 'case-gallery')}
+</article>`).join('');
+
+const portfolio = `<section class="grid-bg inner-intro portfolio-intro"><div class="wrap">
+  <div data-enter>${note('PORTFOLIO / KOI STUDIO')}<h1>Proyectos y <em class="editorial">clientes.</em></h1>
+    <p>Mirá los sistemas que armamos y cómo los usan nuestros clientes.</p></div>
+  <nav class="case-index" aria-label="Casos del portfolio">${projects.map(project => `<a href="#${project.slug}">
+    <img src="${asset(`media/${project.galleryDir}/${project.gallery[0][2]}`)}" alt="" loading="lazy">
+    <div class="case-index-copy">${note(project.label)}<span>${escape(project.shortName ?? project.name)}</span>${arrow}</div>
+  </a>`).join('')}</nav>
+</div></section>
+<section class="section light"><div class="wrap case-list">${cases}</div></section>
+<dialog class="case-viewer" aria-label="Capturas del proyecto">
+  <div class="case-viewer-bar"><p aria-live="polite"></p><button type="button" aria-label="Cerrar galería" autofocus>×</button></div>
+  <img alt="">
+  <div class="case-viewer-controls">
+    <button type="button" data-step="-1" aria-label="Captura anterior">←</button>
+    <button type="button" data-step="1" aria-label="Captura siguiente">→</button>
+  </div>
+</dialog>${closing}`;
+
 const zyroPage = hero({
   label: 'ZYRO AI / PARA CONCESIONARIAS',
   title: 'Subís un auto. <em class="editorial">Martina lo vende</em> en todos tus canales.',
   description: zyro.description + ' Martina atiende las consultas y tu equipo cierra la venta.',
-  actions: button('Ver cómo funciona', '#vsl', 'secondary', down) + shaderButton(zyroContactLabel, zyroContact),
+  actions: heroActions(zyroContact),
   preview: await media(zyro.video, 'ZYRO AI / CONOCÉ A MARTINA', 'Video en preparación'),
 }) + `
 <section class="section light" id="martina"><div class="wrap">
@@ -269,7 +293,7 @@ const cubikoPage = hero({
   label: 'CUBIKO AI / PARA INMOBILIARIAS',
   title: 'Cargás una propiedad. <em class="editorial">Martina atiende</em> las consultas.',
   description: cubiko.description,
-  actions: button('Ver cómo funciona', '#vsl', 'secondary', down) + shaderButton(cubikoContactLabel, cubikoContact),
+  actions: heroActions(cubikoContact),
   preview: await media(cubiko.video, 'CUBIKO AI / CONOCÉ A MARTINA', 'Video en preparación'),
 }) + `
 <section class="section light" id="martina"><div class="wrap" id="sofia">
@@ -308,7 +332,7 @@ const tokiPage = hero({
   label: 'TOKI / PARA NEGOCIOS GASTRONÓMICOS',
   title: 'Seguí en la plancha. <em class="editorial">Toki toma el pedido.</em>',
   description: toki.description,
-  actions: button('Ver cómo funciona', '#vsl', 'secondary', down) + shaderButton(tokiContactLabel, tokiContact),
+  actions: heroActions(tokiContact),
   preview: await media(toki.video, 'TOKI / MIRÁ CÓMO FUNCIONA', 'Video en preparación'),
 }) + `
 <section class="section light" id="como-funciona"><div class="wrap">

@@ -37,6 +37,12 @@ export const projects = [
     summary: 'Una consulta entra por WhatsApp. Sofía responde y se la pasa al vendedor que la puede tomar.',
     scene: 'Entra una consulta por un departamento. ¿Quién la toma?',
     description: 'El equipo carga las propiedades en un panel y las publica en la web. Cuando alguien consulta por WhatsApp, Sofía responde y le pasa la conversación a un vendedor. Si pasan 30 minutos y todavía nadie la tomó, se la asigna a otro.',
+    galleryDir: 'proyectos/lamelas',
+    gallery: [
+      ['Propiedades', 'Inventario de inmuebles con filtros y acceso a cada ficha.', '04-propiedades.webp'],
+      ['Consultas', 'Bandeja para revisar el estado y la asignación de cada consulta.', '06-consultas.webp'],
+      ['Detalle de consulta', 'Datos de contacto, propiedad vinculada y seguimiento.', '12-consulta-detalle.webp'],
+    ],
   },
   {
     slug: 'universidad-san-pablo-t', name: 'Universidad San Pablo T', sector: 'Universidad · Plataforma a medida',
@@ -44,6 +50,12 @@ export const projects = [
     summary: 'Desde la web, una persona puede inscribirse, pagar y quedar matriculada.',
     scene: 'De «me quiero inscribir» a «ya estoy matriculado».',
     description: 'Armamos la web pública y la plataforma donde cada persona puede crear su cuenta, inscribirse y pagar. La matriculación se hace automáticamente y el equipo de la universidad puede gestionar las inscripciones desde su panel.',
+    galleryDir: 'proyectos/uspt',
+    gallery: [
+      ['Sitio institucional', 'Portada de la web pública de la universidad.', 'inicio.webp'],
+      ['Oferta académica', 'Página para explorar las carreras presenciales.', 'carreras.webp'],
+      ['Pagos online', 'Acceso público a los medios de pago de la universidad.', 'pagos.webp'],
+    ],
   },
   {
     slug: 'gentile-autos', name: 'Gentile Autos', sector: 'Concesionaria · Cliente de Zyro AI',
@@ -51,12 +63,25 @@ export const projects = [
     summary: 'El equipo actualiza el stock desde su panel y el comprador ve qué autos siguen disponibles en el catálogo.',
     scene: 'Se vendió un auto. Ahora hay que sacarlo del catálogo.',
     description: 'Armamos el catálogo online y el panel donde el equipo carga los vehículos y actualiza el stock. Así, cuando cambia lo que hay disponible en la concesionaria, el equipo puede actualizar lo que ve el comprador en la web.',
+    galleryDir: 'zyro',
+    gallery: [
+      ['Vidriera online', 'Portada pública de Gentile Autos.', 'publico-01-inicio.webp'],
+      ['Catálogo de vehículos', 'Unidades disponibles para el comprador.', 'publico-02-vehiculos.webp'],
+      ['Gestión de stock', 'Inventario y carga de vehículos desde el panel.', '04-autos.webp'],
+    ],
   },
   {
     slug: 'estudio-guzman', name: 'Estudio Guzmán Abogados Asociados', sector: 'Estudio jurídico · Sistema interno a medida',
+    shortName: 'Estudio Guzmán',
     label: 'Sistema interno a medida', logo: 'estudio-guzman.png', darkLogoSource: true,
     scene: '«¿Quién lleva este expediente y qué vence esta semana?»',
     description: 'Armamos un sistema donde el equipo puede abrir un expediente y ver quién lo lleva, cuál fue la última actuación y qué tareas quedan pendientes. Cada tarea tiene responsable y vencimiento, y desde un tablero común se ve cómo está repartido el trabajo.',
+    galleryDir: 'proyectos/guzman',
+    gallery: [
+      ['Inicio del estudio', 'Resumen de expedientes y tareas pendientes.', '02-inicio.webp'],
+      ['Detalle de expediente', 'Estado, actuaciones y documentación en una sola vista.', '04-expediente.webp'],
+      ['Tareas del equipo', 'Tablero con responsables, prioridades y vencimientos.', '06-tareas.webp'],
+    ],
   },
 ];
 
