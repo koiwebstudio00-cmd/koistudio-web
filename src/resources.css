@@ -25,7 +25,7 @@
 .resource-search input{width:100%;min-width:0;background:none;border:0;outline:0;font:inherit;font-size:16px;color:var(--ink)}
 .resource-search input::placeholder{color:#716960}
 .resource-result-count{margin:18px 0;color:#655e57;font-size:14px}
-.resource-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
+.resource-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;align-items:start}
 .resource-card{display:flex;flex-direction:column;min-width:0;padding:30px;border:1px solid #d6d0c9;border-radius:12px;background:#fff;transition:border-color .2s,box-shadow .2s}
 .resource-card:hover,.resource-card:focus-within{border-color:#b76c3d;box-shadow:0 10px 26px #2b160608}
 .resource-card-top{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:26px}
@@ -36,7 +36,7 @@
 .resource-card h3{font-size:clamp(26px,2.6vw,35px);line-height:1.16;max-width:470px;margin-bottom:16px}
 .resource-card h3 a:hover{color:#a63e00}
 .resource-card>p{color:#605951;margin-bottom:24px;max-width:480px}
-.resource-card-excerpt{margin-top:auto;display:flex;align-items:start;gap:12px;background:#f6f4f1;border:1px solid #e8e2dc;border-radius:7px;padding:14px 17px;min-height:100px}
+.resource-card-excerpt{display:flex;align-items:start;gap:12px;background:#f6f4f1;border:1px solid #e8e2dc;border-radius:7px;padding:14px 17px;min-height:100px}
 .resource-card-excerpt>span{font:italic 42px/1 "Instrument Serif",serif;color:#a63e00}
 .resource-card-excerpt p{font-size:15px;color:#5b4c41}
 .resource-card-link{align-self:start;margin-top:23px;border-bottom:1px solid #b56d3b;padding:3px 0;font-size:15px;font-weight:800;color:#943900}

@@ -1,6 +1,7 @@
 import { resources, resourceTypes } from './resources.mjs';
 import { carouselResources } from './carousel-resources.mjs';
-const libraryResources=[...resources,...carouselResources];
+const talkingHeadCovers=Object.fromEntries(['R02','R04','R06','R08'].map(reel=>[reel,{archivo:`/assets/recursos/talking-heads/${reel}.png`,ancho:1080,alto:1440}]));
+const libraryResources=[...resources.map(resource=>({...resource,cover:talkingHeadCovers[resource.reel]})),...carouselResources];
 const typeLabel=resource=>resource.type==='recurso_carrusel'?'Guía y recursos':resourceTypes[resource.type];
 
 const e = value => String(value).replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char]);
@@ -17,7 +18,7 @@ const icon = topic => {
 
 function card(resource) {
   return `<article class="resource-card" data-resource data-resource-key="${e(resource.clave_integracion??resource.slug)}" data-format="${resource.format??'prompt'}" data-topic="${e(resource.topic)}" data-search="${e([resource.title, resource.description, resource.topic, typeLabel(resource), resource.sector??'', resource.outcome, resource.preview, ...resource.needs, resource.prompt??''].join(' '))}">
-    ${resource.cover?`<a class="resource-card-cover" href="${route(resource)}" tabindex="-1" aria-hidden="true"><img src="${e(resource.cover.archivo)}" alt="" width="1080" height="1350" loading="lazy"></a>`:''}
+    ${resource.cover?`<a class="resource-card-cover" href="${route(resource)}" tabindex="-1" aria-hidden="true"><img src="${e(resource.cover.archivo)}" alt="" width="${resource.cover.ancho}" height="${resource.cover.alto}" loading="lazy"></a>`:''}
     <div class="resource-card-top"><span class="resource-icon">${icon(resource.topic)}</span><span class="resource-type">${e(typeLabel(resource))} <span aria-hidden="true">/</span> ${e(resource.topic)}</span></div>
     <h3><a href="${route(resource)}">${e(resource.title)}</a></h3>
     <p>${e(resource.description)}</p>
