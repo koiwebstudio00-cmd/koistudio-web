@@ -5,6 +5,10 @@ import { products, projects, workshops } from '../src/content.mjs';
 import { zyro } from '../src/zyro.mjs';
 import { cubiko } from '../src/cubiko.mjs';
 import { toki } from '../src/toki.mjs';
+import { resources } from '../src/resources.mjs';
+import { resourceIndex, resourceDetail } from '../src/resource-pages.mjs';
+import { carouselArticles, carouselDetail } from '../src/carousel-resources.mjs';
+import { buildResourceTools } from './resource-tools.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const out = path.join(root, 'dist');
@@ -12,7 +16,7 @@ const config = JSON.parse(await readFile(path.join(root, 'site.config.json'), 'u
 const escape = value => String(value).replace(/[&<>"']/g, char => ({
   '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
 })[char]);
-const whatsapp = message => 'https://wa.me/5493815709287' + (message ? '?text=' + encodeURIComponent(message) : '');
+const whatsapp = message => 'https://wa.me/' + config.whatsapp + (message ? '?text=' + encodeURIComponent(message) : '');
 const arrow = '<span aria-hidden="true">↗</span>';
 const button = (label, href, style = 'primary', glyph = arrow) =>
   `<a class="button ${style}" href="${escape(href)}">${escape(label)}${glyph}</a>`;
@@ -38,7 +42,7 @@ const productDetails = {
 const productName = product => productDetails[product.slug]?.name ?? product.name;
 const menu = route => `<details class="product-menu"><summary>Productos<svg aria-hidden="true" viewBox="0 0 16 16" fill="none"><path d="m4 6 4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
   <div class="product-menu-links">${products.map(product => `<a href="${productPath(product)}"${route === productPath(product) ? ' aria-current="page"' : ''}>${escape(productName(product))}</a>`).join('')}</div>
-</details><a href="/proyectos/"${route === '/proyectos/' ? ' aria-current="page"' : ''}>Proyectos y Clientes</a><a href="/#workshops">Workshops</a>`;
+</details><a href="/proyectos/"${route === '/proyectos/' ? ' aria-current="page"' : ''}>Proyectos y Clientes</a><a href="/#workshops">Workshops</a><a href="/recursos/"${route.startsWith('/recursos/') ? ' aria-current="page"' : ''}>Recursos</a>`;
 const whatsappIcon = `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.372-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.262.489 1.694.626.712.226 1.36.194 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347M12.012 22h-.004a9.95 9.95 0 0 1-5.071-1.389l-.364-.215-3.772.989 1.007-3.677-.237-.377a9.94 9.94 0 0 1-1.523-5.303C2.05 6.527 6.52 2.054 12.015 2.054a9.9 9.9 0 0 1 7.043 2.921 9.9 9.9 0 0 1 2.916 7.049C21.971 17.526 17.501 22 12.012 22m8.48-18.434A11.9 11.9 0 0 0 12.015.05C5.407.05.029 5.426.026 12.034c0 2.112.551 4.173 1.599 5.99L0 23.95l6.065-1.591a12 12 0 0 0 5.943 1.515h.005c6.606 0 11.985-5.377 11.988-11.984a11.9 11.9 0 0 0-3.51-8.324"/></svg>`;
 const brand = `<a class="brand" href="/" aria-label="Koi Studio, inicio"><img src="/assets/brand/koi-symbol.png" width="38" height="38" alt=""><span>Koi Studio<small>AI &amp; SOFTWARE</small></span></a>`;
 const playIcon = `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 8.5 16 12l-6 3.5z" fill="currentColor"/></svg>`;
@@ -98,6 +102,7 @@ function shell(title, description, route, content, index = true) {
 <meta name="twitter:image:alt" content="${escape(social.alt)}">
 <link rel="stylesheet" href="/assets/lenis.css">
 <link rel="stylesheet" href="/assets/styles.css">
+${route.startsWith('/recursos/') ? '<link rel="stylesheet" href="/assets/resources.css"><script type="module" src="/assets/resources.js"></script>' : ''}
 <script type="application/ld+json">${JSON.stringify(organization).replace(/</g, "\\u003c")}</script>
 <script type="module" src="/assets/app.js"></script>
 ${route === '/' || route === '/proyectos/' || route.startsWith('/productos/') ? '<script type="module" src="/assets/hero-shader.js"></script>' : ''}
@@ -130,7 +135,7 @@ ${route === '/' || route === '/proyectos/' || route.startsWith('/productos/') ? 
 </header>
 <main id="contenido">${content}</main>
 <footer class="footer">
-  <div class="wrap footer-inner">${brand}<span>© ${new Date().getFullYear()} Koi Studio</span><nav aria-label="Pie de página"><a href="${escape(config.instagram)}">Instagram</a><a href="/privacidad/">Privacidad</a></nav></div>
+  <div class="wrap footer-inner">${brand}<span>© ${new Date().getFullYear()} Koi Studio</span><nav aria-label="Pie de página"><a href="/recursos/">Recursos</a><a href="${escape(config.instagram)}">Instagram</a><a href="/privacidad/">Privacidad</a></nav></div>
 </footer>
 </body>
 </html>`;
@@ -367,12 +372,15 @@ const pages = [
   ['/productos/zyro-ai/', zyro.name + ' | Koi Studio', zyro.description, zyroPage],
   ['/productos/cubiko-ai/', cubiko.name + ' | Koi Studio', cubiko.description, cubikoPage],
   ['/productos/toki-ai/', toki.name + ' | Koi Studio', toki.description, tokiPage],
+  ['/recursos/', 'Recursos para aplicar IA en tu negocio | Koi Studio', 'La biblioteca de Koi Studio: prompts, guías y herramientas prácticas para aprender y aplicar inteligencia artificial en tu negocio.', resourceIndex],
+  ...resources.map(resource => [`/recursos/${resource.slug}/`, `${resource.title} | Recursos Koi Studio`, resource.description, resourceDetail(resource)]),
+  ...carouselArticles.map(article=>[`/recursos/${article.slug}/`,`${article.titulo} | Recursos Koi Studio`,article.extracto,carouselDetail(article)]),
 ];
 
 await rm(out, { recursive: true, force: true });
 await mkdir(out, { recursive: true });
 await cp(path.join(root, 'assets'), path.join(out, 'assets'), { recursive: true });
-for (const file of ['styles.css', 'app.js', 'analytics.js', 'hero-shader.js']) {
+for (const file of ['styles.css', 'app.js', 'analytics.js', 'hero-shader.js', 'resources.css', 'resources.js']) {
   await cp(path.join(root, 'src', file), path.join(out, 'assets', file));
 }
 const lenis = path.join(root, 'node_modules/lenis');
@@ -385,9 +393,13 @@ for (const [route, title, description, body] of pages) {
   await mkdir(directory, { recursive: true });
   await writeFile(path.join(directory, 'index.html'), shell(title, description, route, body));
 }
+for (const resource of resources) {
+  await writeFile(path.join(out, 'recursos', resource.slug, 'prompt.txt'), resource.prompt + '\n');
+}
+const toolRoutes=await buildResourceTools(root,out,carouselArticles,config.url);
 await mkdir(path.join(out, 'privacidad'));
 await writeFile(path.join(out, 'privacidad/index.html'), shell('Privacidad | Koi Studio', 'Información sobre el uso de datos.', '/privacidad/', `<section class="inner-intro"><div class="wrap legal"><h1>Privacidad</h1><p>Usamos Microsoft Clarity en el sitio público para mejorar la experiencia mediante mapas de calor y grabaciones de sesiones. Clarity puede procesar interacciones, datos técnicos del dispositivo y cookies según su configuración y las preferencias de consentimiento. Podés consultar la <a href="https://privacy.microsoft.com/es-es/privacystatement">declaración de privacidad de Microsoft</a>.</p><p>Si nos escribís por WhatsApp, usamos lo que compartís para responder tu consulta. Para consultas sobre tus datos, escribinos a <a href="mailto:${escape(config.email)}">${escape(config.email)}</a>.</p></div></section>`));
 await writeFile(path.join(out, '404.html'), shell('Página no encontrada | Koi Studio', 'Volvé al inicio de Koi Studio.', '/404.html', `<section class="inner-intro"><div class="wrap">${note('404')}<h1>Página no encontrada</h1>${button('Volver al inicio', '/')}</div></section>`, false));
 await writeFile(path.join(out, 'robots.txt'), 'User-agent: *\nAllow: /\nSitemap: ' + config.url + '/sitemap.xml\n');
 await writeFile(path.join(out, 'sitemap.xml'), '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' +
-  [...pages.map(page => page[0]), '/privacidad/'].map(route => '<url><loc>' + escape(config.url + route) + '</loc></url>').join('') + '</urlset>\n');
+  [...pages.map(page => page[0]), ...toolRoutes, '/privacidad/'].map(route => '<url><loc>' + escape(config.url + route) + '</loc></url>').join('') + '</urlset>\n');

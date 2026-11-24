@@ -1,0 +1,5 @@
+Pedido principal para copiar
+Tengo estas tres tareas propias autorizadas [TAREAS] y este resultado esperado para cada una [CRITERIOS]. Diseñá la misma prueba para hasta dos herramientas candidatas por tarea. Considerá escritura/resumen, archivos y conexiones de Google, búsqueda con fuentes, o cambios de código con Claude Code/Codex cuando corresponda. No atribuyas funciones, precios ni permisos no verificados. Para cada prueba registrá exactitud frente al material, referencias, tiempo total de revisión, errores, exportación, costo confirmado o pendiente y resultado. No asignes una ganadora universal: elegí según mis pruebas y presupuesto.
+
+Comparar dos resultados sin una nota inventada
+Encargo e insumo original [MATERIAL]. Respuesta A [TEXTO]. Respuesta B [TEXTO]. Compará conservación de datos, omisiones, afirmaciones sin respaldo y cumplimiento del formato pedido. Citá el fragmento concreto en cada observación. Si no puede comprobarse con el material, marcá no evaluable. No elijas por extensión o tono convincente.

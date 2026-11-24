@@ -1,0 +1,14 @@
+Calculá cuánto aporta cada plato antes de decidir qué promocionar
+
+PLATO / PORCIÓN:
+PRECIO Y BASE DE CÁLCULO:
+INGREDIENTE: cantidad usada + unidad + costo por esa unidad
+TOTAL INGREDIENTES:
+EMPAQUE:
+COMISIÓN POR VENTA:
+OTROS VARIABLES:
+UNIDADES DEL PERÍODO:
+MINUTOS DE PREPARACIÓN:
+DESCUENTO A PROBAR:
+COSTOS DE LA OFERTA:
+APORTE UNITARIO / TOTAL:

@@ -1,0 +1,20 @@
+Armar el storyboard
+Necesito un video vertical de quince segundos para un solo auto, con estas seis fotos propias de la misma unidad: [FRENTE, LATERAL, TRASERA, TABLERO, ASIENTOS, BAÚL]. Modelo, año, estado actual y canal confirmados: [DATOS]. Objetivo: [CONSULTAR/PEDIR FICHA/COORDINAR]. Armá seis tomas que usen las seis fotos, con inicio 0–3 segundos, muestra 3–11 y cierre 11–15. Entregá tiempo inicial/final, foto, recorte o movimiento suave, texto corto que se lea sin sonido y dato a verificar. Conservá ruedas, espejos, carrocería, interior y equipamiento. No inventes movimientos del auto ni resultados. Si un movimiento generado altera detalles, usá desplazamiento o escala de la foto original.
+
+Foto tablero/interior
+Usá solamente [ARCHIVO_01] del mismo auto. Aplicá recorte fijo durante 3 segundos. Auto y objetos estáticos; conservá ruedas, espejos, carrocería e interior. No inventes acciones ni detalles. Si cambia algo, descartá el clip y animá escala/posición sobre la foto original.
+
+Foto frente
+Usá solamente [ARCHIVO_02] del mismo auto. Aplicá acercamiento leve durante 2 segundos. Auto y objetos estáticos; conservá ruedas, espejos, carrocería e interior. No inventes acciones ni detalles. Si cambia algo, descartá el clip y animá escala/posición sobre la foto original.
+
+Foto lateral
+Usá solamente [ARCHIVO_03] del mismo auto. Aplicá desplazamiento leve durante 2 segundos. Auto y objetos estáticos; conservá ruedas, espejos, carrocería e interior. No inventes acciones ni detalles. Si cambia algo, descartá el clip y animá escala/posición sobre la foto original.
+
+Foto trasera
+Usá solamente [ARCHIVO_04] del mismo auto. Aplicá recorte fijo durante 2 segundos. Auto y objetos estáticos; conservá ruedas, espejos, carrocería e interior. No inventes acciones ni detalles. Si cambia algo, descartá el clip y animá escala/posición sobre la foto original.
+
+Foto asientos
+Usá solamente [ARCHIVO_05] del mismo auto. Aplicá acercamiento leve durante 2 segundos. Auto y objetos estáticos; conservá ruedas, espejos, carrocería e interior. No inventes acciones ni detalles. Si cambia algo, descartá el clip y animá escala/posición sobre la foto original.
+
+Foto baúl
+Usá solamente [ARCHIVO_06] del mismo auto. Aplicá plano fijo para cierre durante 4 segundos. Auto y objetos estáticos; conservá ruedas, espejos, carrocería e interior. No inventes acciones ni detalles. Si cambia algo, descartá el clip y animá escala/posición sobre la foto original.

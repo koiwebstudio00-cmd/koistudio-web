@@ -1,0 +1,13 @@
+Decidí si una tarea necesita una herramienta, una planilla o un sistema
+
+PROCESO: entrada → pasos → resultado
+FRECUENCIA:
+PERSONAS Y TRASPASOS:
+ERRORES OBSERVADOS:
+OPCIÓN A / B / C:
+PUESTA EN MARCHA:
+COSTO DE USO / MANTENIMIENTO / REVISIÓN:
+PRUEBA REAL:
+CRITERIO DE ÉXITO:
+RESPONSABLE:
+DECISIÓN:

@@ -1,0 +1,5 @@
+Pedido principal para copiar
+Con estos datos verificados de una sola unidad [DATOS], escribí título de máximo once palabras, cuatro datos principales, descripción de hasta noventa palabras, condiciones confirmadas y cómo consultar por [CANAL]. Tono directo, sin impecable ni beneficios sin respaldo. No supongas equipamiento, dueños, garantía, financiación ni estado mecánico por modelo. Separá una lista INTERNA de PENDIENTES y contradicciones. No incluyas datos pendientes como afirmaciones en el texto público. Si el stock actual dice reservado o vendido, no lo presentes disponible. Fuente y fecha de la fila: [REFERENCIA].
+
+Preparar la respuesta de WhatsApp
+Con esta ficha revisada [FICHA], redactá una respuesta de hasta 60 palabras para [CONSULTA]. Usá solo datos confirmados. Separá cualquier pendiente en una nota interna que no forme parte del mensaje para el cliente. Si el estado es reservado o vendido, no lo presentes como disponible. No inventes garantía ni financiación.

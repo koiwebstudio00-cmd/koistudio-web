@@ -1,0 +1,5 @@
+Pedido principal para copiar
+Compará esta imagen editada con su original autorizado [IMÁGENES]. Revisá en este orden: 1 producto y cantidad; 2 letras y etiquetas; 3 sombras, reflejos y apoyos; 4 lugar, arquitectura y materiales; 5 lo que recibirá el cliente y lo que la imagen promete. Para cada punto indicá diferencia observable, ubicación y corrección concreta. Si no se puede comprobar, decilo. No afirmes que es IA por su estilo. Si muestra una reforma aún no realizada, pedí una etiqueta visible de propuesta y conservar el original para comparación.
+
+Pedir la corrección de una diferencia localizada
+Comparé original y versión editada. Encontré esta diferencia [ELEMENTO Y UBICACIÓN]. Corregí únicamente esa diferencia para volver al contenido del original; mantené el resto. No reconstruyas ingredientes, piezas, arquitectura o etiquetas por aproximación. Si no podés conservar el detalle real, indicá que debo usar otra foto o el original.

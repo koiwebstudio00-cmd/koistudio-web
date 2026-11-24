@@ -1,0 +1,183 @@
+Gastronomía · 01. Atender una objeción
+Trabajo con un negocio gastronómico. Oferta, platos, tamaño, ingredientes, precios y modalidad de pedido confirmados: [BASE REAL]. No inventes alérgenos, envío, promociones ni disponibilidad.
+
+Respondé esta objeción con mis datos, sin presionar: [MENSAJE]. Oferta real [PRECIO E INCLUSIONES]. Alternativas disponibles [LISTA O NINGUNA]. Escribí hasta 55 palabras y una sola pregunta si corresponde. No inventes descuentos; si pidió no contactar, redactá solo un cierre respetuoso.
+
+Gastronomía · 02. Resumir una consulta
+Trabajo con un negocio gastronómico. Oferta, platos, tamaño, ingredientes, precios y modalidad de pedido confirmados: [BASE REAL]. No inventes alérgenos, envío, promociones ni disponibilidad.
+
+Resumí esta consulta anonimizada [TEXTO]. Separá necesidad expresada, datos confirmados, respuesta ya dada, faltantes y próximo paso por confirmar. Citá una frase de respaldo. No supongas presupuesto, disponibilidad ni intención de compra.
+
+Gastronomía · 03. Preparar un seguimiento
+Trabajo con un negocio gastronómico. Oferta, platos, tamaño, ingredientes, precios y modalidad de pedido confirmados: [BASE REAL]. No inventes alérgenos, envío, promociones ni disponibilidad.
+
+Redactá un seguimiento breve para [SITUACIÓN], con esta conversación anonimizada y preferencia de contacto confirmada [DATOS]. Aportá este motivo real para retomar [NOVEDAD]. Si no hay motivo útil o no está autorizado el contacto, indicalo y no inventes un mensaje comercial.
+
+Gastronomía · 04. Sacar ideas de preguntas
+Trabajo con un negocio gastronómico. Oferta, platos, tamaño, ingredientes, precios y modalidad de pedido confirmados: [BASE REAL]. No inventes alérgenos, envío, promociones ni disponibilidad.
+
+Sacá ideas de estas preguntas reales de [NEGOCIO]: [LISTA]. Para cada una indicá primera frase, respuesta confirmada o dato pendiente, foto disponible y formato. No inventes las respuestas.
+
+Gastronomía · 05. Armar un mes de ideas
+Trabajo con un negocio gastronómico. Oferta, platos, tamaño, ingredientes, precios y modalidad de pedido confirmados: [BASE REAL]. No inventes alérgenos, envío, promociones ni disponibilidad.
+
+Armá treinta ideas con estos productos y fotos propios [MATERIAL]. Alterná diez explicaciones, diez respuestas/demostraciones y diez ofertas reales o muestras. Incluí texto, imagen existente, acción final y datos a verificar. No inventes promociones.
+
+Gastronomía · 06. Escribir un guion de fotos
+Trabajo con un negocio gastronómico. Oferta, platos, tamaño, ingredientes, precios y modalidad de pedido confirmados: [BASE REAL]. No inventes alérgenos, envío, promociones ni disponibilidad.
+
+Escribí un guion vertical de quince segundos usando estas fotos propias [LISTA]. Indicá tiempos, imagen, movimiento suave y texto corto. Conservá el producto y no inventes demostraciones. Marcá lo que no se puede mostrar con las fotos disponibles.
+
+Gastronomía · 07. Extraer tareas de notas
+Trabajo con un negocio gastronómico. Oferta, platos, tamaño, ingredientes, precios y modalidad de pedido confirmados: [BASE REAL]. No inventes alérgenos, envío, promociones ni disponibilidad.
+
+Extraé tareas de estas notas autorizadas [TEXTO]. Una acción por fila con responsable explícito o por definir, fecha textual o sin fecha, duda y frase de respaldo. No conviertas ideas en acuerdos.
+
+Gastronomía · 08. Ordenar un proceso
+Trabajo con un negocio gastronómico. Oferta, platos, tamaño, ingredientes, precios y modalidad de pedido confirmados: [BASE REAL]. No inventes alérgenos, envío, promociones ni disponibilidad.
+
+Ordená este proceso real en pasos [DESCRIPCIÓN]. Para cada paso indicá qué entra, quién lo realiza si está dicho, qué entrega y cómo se revisa. Marcá huecos y contradicciones antes de completarlos; no inventes cómo funciona mi negocio.
+
+Gastronomía · 09. Agrupar reclamos
+Trabajo con un negocio gastronómico. Oferta, platos, tamaño, ingredientes, precios y modalidad de pedido confirmados: [BASE REAL]. No inventes alérgenos, envío, promociones ni disponibilidad.
+
+Agrupá estos reclamos anonimizados por motivo [LISTA NUMERADA]. Mostrá IDs, frase de evidencia y conteo de registros por grupo. Separá hechos de hipótesis y proponé preguntas para confirmar qué pasó. No extrapoles a todos los clientes.
+
+Gastronomía · 10. Comparar precio y costos
+Trabajo con un negocio gastronómico. Oferta, platos, tamaño, ingredientes, precios y modalidad de pedido confirmados: [BASE REAL]. No inventes alérgenos, envío, promociones ni disponibilidad.
+
+Compará precio y costos de esta tabla verificada [TABLA]. Mostrá costo variable, contribución = precio menos costo y margen sobre precio. No calcules con datos faltantes ni llames ganancia neta a esa diferencia. Conservá moneda y unidades.
+
+Gastronomía · 11. Simular un descuento
+Trabajo con un negocio gastronómico. Oferta, platos, tamaño, ingredientes, precios y modalidad de pedido confirmados: [BASE REAL]. No inventes alérgenos, envío, promociones ni disponibilidad.
+
+Mostrá cuánto queda con [DESCUENTO] sobre [PRECIO] y [COSTOS VARIABLES CONFIRMADOS]. Calculá precio rebajado y contribución, aclarando si las comisiones cambian. Si da cero o pérdida, señalalo. No supongas que aumentan las ventas.
+
+Gastronomía · 12. Comparar aporte de productos
+Trabajo con un negocio gastronómico. Oferta, platos, tamaño, ingredientes, precios y modalidad de pedido confirmados: [BASE REAL]. No inventes alérgenos, envío, promociones ni disponibilidad.
+
+Compará cuánto aporta cada producto con estas ventas y costos del mismo período [TABLA]. Mostrá contribución por unidad, unidades vendidas y aporte total, además de tiempo de preparación si lo suministré. Marcá faltantes y no confundas aporte con utilidad neta.
+
+Inmobiliarias · 01. Atender una objeción
+Trabajo con una inmobiliaria. Propiedad o proceso identificado, zona y condiciones verificadas: [BASE REAL]. No inventes superficies, disponibilidad, requisitos, gastos ni visitas confirmadas.
+
+Respondé esta objeción con mis datos, sin presionar: [MENSAJE]. Oferta real [PRECIO E INCLUSIONES]. Alternativas disponibles [LISTA O NINGUNA]. Escribí hasta 55 palabras y una sola pregunta si corresponde. No inventes descuentos; si pidió no contactar, redactá solo un cierre respetuoso.
+
+Inmobiliarias · 02. Resumir una consulta
+Trabajo con una inmobiliaria. Propiedad o proceso identificado, zona y condiciones verificadas: [BASE REAL]. No inventes superficies, disponibilidad, requisitos, gastos ni visitas confirmadas.
+
+Resumí esta consulta anonimizada [TEXTO]. Separá necesidad expresada, datos confirmados, respuesta ya dada, faltantes y próximo paso por confirmar. Citá una frase de respaldo. No supongas presupuesto, disponibilidad ni intención de compra.
+
+Inmobiliarias · 03. Preparar un seguimiento
+Trabajo con una inmobiliaria. Propiedad o proceso identificado, zona y condiciones verificadas: [BASE REAL]. No inventes superficies, disponibilidad, requisitos, gastos ni visitas confirmadas.
+
+Redactá un seguimiento breve para [SITUACIÓN], con esta conversación anonimizada y preferencia de contacto confirmada [DATOS]. Aportá este motivo real para retomar [NOVEDAD]. Si no hay motivo útil o no está autorizado el contacto, indicalo y no inventes un mensaje comercial.
+
+Inmobiliarias · 04. Sacar ideas de preguntas
+Trabajo con una inmobiliaria. Propiedad o proceso identificado, zona y condiciones verificadas: [BASE REAL]. No inventes superficies, disponibilidad, requisitos, gastos ni visitas confirmadas.
+
+Sacá ideas de estas preguntas reales de [NEGOCIO]: [LISTA]. Para cada una indicá primera frase, respuesta confirmada o dato pendiente, foto disponible y formato. No inventes las respuestas.
+
+Inmobiliarias · 05. Armar un mes de ideas
+Trabajo con una inmobiliaria. Propiedad o proceso identificado, zona y condiciones verificadas: [BASE REAL]. No inventes superficies, disponibilidad, requisitos, gastos ni visitas confirmadas.
+
+Armá treinta ideas con estos productos y fotos propios [MATERIAL]. Alterná diez explicaciones, diez respuestas/demostraciones y diez ofertas reales o muestras. Incluí texto, imagen existente, acción final y datos a verificar. No inventes promociones.
+
+Inmobiliarias · 06. Escribir un guion de fotos
+Trabajo con una inmobiliaria. Propiedad o proceso identificado, zona y condiciones verificadas: [BASE REAL]. No inventes superficies, disponibilidad, requisitos, gastos ni visitas confirmadas.
+
+Escribí un guion vertical de quince segundos usando estas fotos propias [LISTA]. Indicá tiempos, imagen, movimiento suave y texto corto. Conservá el producto y no inventes demostraciones. Marcá lo que no se puede mostrar con las fotos disponibles.
+
+Inmobiliarias · 07. Extraer tareas de notas
+Trabajo con una inmobiliaria. Propiedad o proceso identificado, zona y condiciones verificadas: [BASE REAL]. No inventes superficies, disponibilidad, requisitos, gastos ni visitas confirmadas.
+
+Extraé tareas de estas notas autorizadas [TEXTO]. Una acción por fila con responsable explícito o por definir, fecha textual o sin fecha, duda y frase de respaldo. No conviertas ideas en acuerdos.
+
+Inmobiliarias · 08. Ordenar un proceso
+Trabajo con una inmobiliaria. Propiedad o proceso identificado, zona y condiciones verificadas: [BASE REAL]. No inventes superficies, disponibilidad, requisitos, gastos ni visitas confirmadas.
+
+Ordená este proceso real en pasos [DESCRIPCIÓN]. Para cada paso indicá qué entra, quién lo realiza si está dicho, qué entrega y cómo se revisa. Marcá huecos y contradicciones antes de completarlos; no inventes cómo funciona mi negocio.
+
+Inmobiliarias · 09. Agrupar reclamos
+Trabajo con una inmobiliaria. Propiedad o proceso identificado, zona y condiciones verificadas: [BASE REAL]. No inventes superficies, disponibilidad, requisitos, gastos ni visitas confirmadas.
+
+Agrupá estos reclamos anonimizados por motivo [LISTA NUMERADA]. Mostrá IDs, frase de evidencia y conteo de registros por grupo. Separá hechos de hipótesis y proponé preguntas para confirmar qué pasó. No extrapoles a todos los clientes.
+
+Inmobiliarias · 10. Comparar precio y costos
+Trabajo con una inmobiliaria. Propiedad o proceso identificado, zona y condiciones verificadas: [BASE REAL]. No inventes superficies, disponibilidad, requisitos, gastos ni visitas confirmadas.
+
+Con esta tabla de operaciones de la inmobiliaria [TABLA], compará ingresos propios por honorarios o servicios efectivamente confirmados y costos directos de esas operaciones. No uses el precio del inmueble ni el alquiler completo como ingreso de la inmobiliaria. Mostrá ingreso propio menos costos directos, faltantes y fórmulas; no lo llames ganancia neta.
+
+Inmobiliarias · 11. Simular un descuento
+Trabajo con una inmobiliaria. Propiedad o proceso identificado, zona y condiciones verificadas: [BASE REAL]. No inventes superficies, disponibilidad, requisitos, gastos ni visitas confirmadas.
+
+Simulá esta reducción autorizada de honorarios o del precio de un servicio de la inmobiliaria [DATOS]. Usá solo el ingreso propio de la inmobiliaria y los costos directos correspondientes, no el precio de la propiedad. Mostrá ingreso nuevo, costos que cambian y aporte antes de gastos fijos. No prometas ventas ni supongas autorización para modificar contratos.
+
+Inmobiliarias · 12. Comparar aporte de productos
+Trabajo con una inmobiliaria. Propiedad o proceso identificado, zona y condiciones verificadas: [BASE REAL]. No inventes superficies, disponibilidad, requisitos, gastos ni visitas confirmadas.
+
+Compará estas operaciones del mismo período [TABLA]: ingreso propio confirmado de la inmobiliaria, costos directos, cantidad de operaciones y tiempo de trabajo si existe. Mostrá aporte por operación y total, con faltantes. No confundas valor de inmuebles o alquileres con facturación propia ni el aporte con utilidad neta.
+
+Concesionarias · 01. Atender una objeción
+Trabajo con una concesionaria. Unidad identificada y ficha vigente: [BASE REAL]. No inventes equipamiento, kilometraje verificado, garantías, financiación o estado comercial.
+
+Respondé esta objeción con mis datos, sin presionar: [MENSAJE]. Oferta real [PRECIO E INCLUSIONES]. Alternativas disponibles [LISTA O NINGUNA]. Escribí hasta 55 palabras y una sola pregunta si corresponde. No inventes descuentos; si pidió no contactar, redactá solo un cierre respetuoso.
+
+Concesionarias · 02. Resumir una consulta
+Trabajo con una concesionaria. Unidad identificada y ficha vigente: [BASE REAL]. No inventes equipamiento, kilometraje verificado, garantías, financiación o estado comercial.
+
+Resumí esta consulta anonimizada [TEXTO]. Separá necesidad expresada, datos confirmados, respuesta ya dada, faltantes y próximo paso por confirmar. Citá una frase de respaldo. No supongas presupuesto, disponibilidad ni intención de compra.
+
+Concesionarias · 03. Preparar un seguimiento
+Trabajo con una concesionaria. Unidad identificada y ficha vigente: [BASE REAL]. No inventes equipamiento, kilometraje verificado, garantías, financiación o estado comercial.
+
+Redactá un seguimiento breve para [SITUACIÓN], con esta conversación anonimizada y preferencia de contacto confirmada [DATOS]. Aportá este motivo real para retomar [NOVEDAD]. Si no hay motivo útil o no está autorizado el contacto, indicalo y no inventes un mensaje comercial.
+
+Concesionarias · 04. Sacar ideas de preguntas
+Trabajo con una concesionaria. Unidad identificada y ficha vigente: [BASE REAL]. No inventes equipamiento, kilometraje verificado, garantías, financiación o estado comercial.
+
+Sacá ideas de estas preguntas reales de [NEGOCIO]: [LISTA]. Para cada una indicá primera frase, respuesta confirmada o dato pendiente, foto disponible y formato. No inventes las respuestas.
+
+Concesionarias · 05. Armar un mes de ideas
+Trabajo con una concesionaria. Unidad identificada y ficha vigente: [BASE REAL]. No inventes equipamiento, kilometraje verificado, garantías, financiación o estado comercial.
+
+Armá treinta ideas con estos productos y fotos propios [MATERIAL]. Alterná diez explicaciones, diez respuestas/demostraciones y diez ofertas reales o muestras. Incluí texto, imagen existente, acción final y datos a verificar. No inventes promociones.
+
+Concesionarias · 06. Escribir un guion de fotos
+Trabajo con una concesionaria. Unidad identificada y ficha vigente: [BASE REAL]. No inventes equipamiento, kilometraje verificado, garantías, financiación o estado comercial.
+
+Escribí un guion vertical de quince segundos usando estas fotos propias [LISTA]. Indicá tiempos, imagen, movimiento suave y texto corto. Conservá el producto y no inventes demostraciones. Marcá lo que no se puede mostrar con las fotos disponibles.
+
+Concesionarias · 07. Extraer tareas de notas
+Trabajo con una concesionaria. Unidad identificada y ficha vigente: [BASE REAL]. No inventes equipamiento, kilometraje verificado, garantías, financiación o estado comercial.
+
+Extraé tareas de estas notas autorizadas [TEXTO]. Una acción por fila con responsable explícito o por definir, fecha textual o sin fecha, duda y frase de respaldo. No conviertas ideas en acuerdos.
+
+Concesionarias · 08. Ordenar un proceso
+Trabajo con una concesionaria. Unidad identificada y ficha vigente: [BASE REAL]. No inventes equipamiento, kilometraje verificado, garantías, financiación o estado comercial.
+
+Ordená este proceso real en pasos [DESCRIPCIÓN]. Para cada paso indicá qué entra, quién lo realiza si está dicho, qué entrega y cómo se revisa. Marcá huecos y contradicciones antes de completarlos; no inventes cómo funciona mi negocio.
+
+Concesionarias · 09. Agrupar reclamos
+Trabajo con una concesionaria. Unidad identificada y ficha vigente: [BASE REAL]. No inventes equipamiento, kilometraje verificado, garantías, financiación o estado comercial.
+
+Agrupá estos reclamos anonimizados por motivo [LISTA NUMERADA]. Mostrá IDs, frase de evidencia y conteo de registros por grupo. Separá hechos de hipótesis y proponé preguntas para confirmar qué pasó. No extrapoles a todos los clientes.
+
+Concesionarias · 10. Comparar precio y costos
+Trabajo con una concesionaria. Unidad identificada y ficha vigente: [BASE REAL]. No inventes equipamiento, kilometraje verificado, garantías, financiación o estado comercial.
+
+Compará precio y costos de esta tabla verificada [TABLA]. Mostrá costo variable, contribución = precio menos costo y margen sobre precio. No calcules con datos faltantes ni llames ganancia neta a esa diferencia. Conservá moneda y unidades.
+
+ En costos de una unidad, separá adquisición y costos directos confirmados de preparación y venta; conservá moneda y período. No supongas costos fiscales o comisiones ausentes.
+
+Concesionarias · 11. Simular un descuento
+Trabajo con una concesionaria. Unidad identificada y ficha vigente: [BASE REAL]. No inventes equipamiento, kilometraje verificado, garantías, financiación o estado comercial.
+
+Mostrá cuánto queda con [DESCUENTO] sobre [PRECIO] y [COSTOS VARIABLES CONFIRMADOS]. Calculá precio rebajado y contribución, aclarando si las comisiones cambian. Si da cero o pérdida, señalalo. No supongas que aumentan las ventas.
+
+ En costos de una unidad, separá adquisición y costos directos confirmados de preparación y venta; conservá moneda y período. No supongas costos fiscales o comisiones ausentes.
+
+Concesionarias · 12. Comparar aporte de productos
+Trabajo con una concesionaria. Unidad identificada y ficha vigente: [BASE REAL]. No inventes equipamiento, kilometraje verificado, garantías, financiación o estado comercial.
+
+Compará cuánto aporta cada producto con estas ventas y costos del mismo período [TABLA]. Mostrá contribución por unidad, unidades vendidas y aporte total, además de tiempo de preparación si lo suministré. Marcá faltantes y no confundas aporte con utilidad neta. En costos de una unidad, separá adquisición y costos directos confirmados de preparación y venta; conservá moneda y período. No supongas costos fiscales o comisiones ausentes.

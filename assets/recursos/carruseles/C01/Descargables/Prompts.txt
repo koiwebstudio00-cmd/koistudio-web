@@ -1,0 +1,8 @@
+Pedido principal para copiar
+Tengo [NEGOCIO] en [ZONA]. Vendemos [OFERTA CONFIRMADA] y se pide por [CANAL]. Estas son las fotos propias que puedo publicar: [LISTA NUMERADA CON LO QUE REALMENTE MUESTRA CADA FOTO]. Dame siete ideas para esta semana. Para cada una, indicá día, objetivo (mostrar producto, generar confianza o responder una duda), foto existente, publicación o historia, primera frase, texto para publicar y acción final. Podés repetir una foto con otra explicación. No exijas veinte fotos ni inventes imágenes, precios, plazos, reseñas o promociones. Si falta un dato, dejalo para confirmar. Elegí ideas realizables con este material y [TIEMPO DISPONIBLE].
+
+Adaptar la semana a una inmobiliaria
+Tengo fotos autorizadas de una sola propiedad: [INVENTARIO]. Datos confirmados: [TIPO, ZONA, AMBIENTES Y FORMA DE CONSULTA]. Con ese material, proponé siete publicaciones o historias: día, pregunta que responde, foto, primera frase y texto. No inventes metros, gastos, disponibilidad ni requisitos. Separá lo que falta confirmar y no uses fotos de otra propiedad.
+
+Adaptar la semana a una concesionaria
+Tengo fotos de esta unidad del stock [ID E INVENTARIO]. Datos verificados y estado de hoy: [FICHA]. Prepará siete ideas usando solo ese material: exterior, interior, detalle, dudas y forma de consultar. Indicá foto, primera frase, texto y dato por confirmar. No agregues equipamiento, financiación, garantía o kilómetros no verificados.

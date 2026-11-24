@@ -1,0 +1,11 @@
+Pedido principal para copiar
+Un cliente de [NEGOCIO] escribió: [MENSAJE SIN DATOS PERSONALES]. Oferta confirmada: [PRODUCTO, PRECIO E INCLUSIONES]. Alternativas disponibles y diferencias: [LISTA O NINGUNA]. Prepará cinco borradores de hasta 55 palabras, uno para cada situación: preguntar qué está comparando; explicar una diferencia comprobable; ofrecer una alternativa real dentro de [PRESUPUESTO CONFIRMADO]; proponer el próximo paso con una sola pregunta; cerrar cuando no quiere seguir. No inventes descuentos, financiación, urgencia ni interés. Si pidió no recibir contacto, entregá solo el cierre y señalá detener los seguimientos asociados. Si falta presupuesto o stock, preguntá antes de ofrecer algo.
+
+Aplicarlo en gastronomía
+Un cliente escribió [MENSAJE]. Este es el plato real, tamaño, precio e inclusiones [DATOS]. Alternativas disponibles [LISTA O NINGUNA]. Redactá una sola respuesta de hasta 55 palabras que primero atienda la comparación o duda y proponga un paso si corresponde. No supongas presupuesto, cantidades de comensales, descuento o envío. Si pidió no contacto, solo cerrá respetuosamente.
+
+Aplicarlo en una inmobiliaria
+Consulta anonimizada [MENSAJE]. Propiedad e importes confirmados [DATOS]. Explicá la diferencia relevante sin inventar requisitos ni gastos. Si falta saber qué monto compara, hacé una pregunta breve. Ofrecé otra propiedad solo si está en [ALTERNATIVAS REVISADAS]. Entregá una respuesta breve, no una secuencia de insistencia.
+
+Aplicarlo en una concesionaria
+Mensaje [CONSULTA]. Unidad y condiciones verificadas [FICHA]. Otras unidades disponibles [LISTA]. Escribí una respuesta breve que aclare si compara precio total, cuota u otra unidad. No inventes aprobación de crédito, historial, garantías o descuentos. Cerrá con una sola pregunta útil si quiere continuar.

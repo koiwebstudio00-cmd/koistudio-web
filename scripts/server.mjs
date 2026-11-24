@@ -4,7 +4,7 @@ import { createReadStream } from 'node:fs';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 const root=path.resolve(fileURLToPath(new URL('../dist/',import.meta.url)));
-const types={'.mp4':'video/mp4','.ico':'image/x-icon','.webmanifest':'application/manifest+json','.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'text/javascript; charset=utf-8','.json':'application/json','.png':'image/png','.jpg':'image/jpeg','.webp':'image/webp','.ttf':'font/ttf','.txt':'text/plain; charset=utf-8','.xml':'application/xml; charset=utf-8'};
+const types={'.zip':'application/zip','.mp4':'video/mp4','.ico':'image/x-icon','.webmanifest':'application/manifest+json','.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'text/javascript; charset=utf-8','.json':'application/json','.png':'image/png','.jpg':'image/jpeg','.webp':'image/webp','.ttf':'font/ttf','.txt':'text/plain; charset=utf-8','.xml':'application/xml; charset=utf-8'};
 const port=Number(process.env.PORT || 4173);
 
 function streamVideo(req, res, file, size) {
@@ -53,7 +53,7 @@ http.createServer(async(req,res)=>{
   }
   let data;
   try{data=await readFile(file);}catch{data=await readFile(path.join(root,'404.html'));status=404;file='404.html';}
-  res.writeHead(status,{'Content-Type':types[path.extname(file)]||'application/octet-stream','X-Content-Type-Options':'nosniff','Referrer-Policy':'strict-origin-when-cross-origin','X-Frame-Options':'DENY','Content-Security-Policy':"default-src 'self'; script-src 'self' https://*.clarity.ms; connect-src 'self' https://*.clarity.ms https://c.bing.com; style-src 'self'; img-src 'self' data: https://*.clarity.ms https://c.bing.com; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"});
+  res.writeHead(status,{...(pathname.startsWith('/assets/recursos/carruseles/')&&pathname.includes('/Descargables/')?{'Content-Disposition':'attachment'}:{}),'Content-Type':types[path.extname(file)]||'application/octet-stream','X-Content-Type-Options':'nosniff','Referrer-Policy':'strict-origin-when-cross-origin','X-Frame-Options':'DENY','Content-Security-Policy':"default-src 'self'; script-src 'self' https://*.clarity.ms; connect-src 'self' https://*.clarity.ms https://c.bing.com; style-src 'self'; img-src 'self' data: https://*.clarity.ms https://c.bing.com; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"});
   res.end(req.method==='HEAD'?undefined:data);
  }catch{res.writeHead(400);res.end('Bad request');}
 }).listen(port,'127.0.0.1',()=>console.log(`Koi Studio: http://127.0.0.1:${port}`));

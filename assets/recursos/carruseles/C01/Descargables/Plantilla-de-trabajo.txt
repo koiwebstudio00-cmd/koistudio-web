@@ -1,0 +1,18 @@
+Armá siete publicaciones con las fotos que ya tenés
+
+NEGOCIO:
+QUÉ VENDO:
+CÓMO SE PIDE:
+INVENTARIO DE FOTOS (ID + qué se ve):
+DÍAS EN QUE PUEDO PUBLICAR:
+
+PUBLICACIÓN 1
+Día:
+Foto / formato:
+Primera frase:
+Texto:
+Dato por confirmar:
+Responsable:
+Estado:
+
+Repetí esta ficha para las siete publicaciones.

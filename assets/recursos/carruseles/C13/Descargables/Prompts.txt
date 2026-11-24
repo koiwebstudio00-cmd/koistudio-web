@@ -1,0 +1,5 @@
+Pedido principal para copiar
+Mejorá esta foto real y autorizada de [AMBIENTE] corrigiendo solo exposición y color. Conservá puertas, ventanas, paredes, columnas, enchufes, pisos, reflejos, materiales, distribución y proporciones. Distracciones temporales que se pueden retirar: [LISTA O NINGUNA]. Humedad, grietas y daños reales deben seguir visibles. No inventes ventanas, muebles, terminaciones ni vistas. Si no podés conservar el ambiente, mantené la original. Cualquier simulación de pintura o reforma se hará aparte y rotulada como vista previa, nunca como estado actual.
+
+Corregir la luz de un ambiente
+Usá esta foto real de [AMBIENTE]. Mejorá exposición y balance de blancos sin cambiar distribución, puertas, ventanas, columnas, enchufes, pisos, materiales o proporciones. Conservá humedad y otros defectos visibles. No agregues vistas ni mobiliario. El resultado debe mostrar el mismo estado real con una luz más equilibrada.

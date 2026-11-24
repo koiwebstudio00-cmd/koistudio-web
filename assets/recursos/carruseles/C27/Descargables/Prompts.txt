@@ -1,0 +1,5 @@
+Pedido principal para copiar
+Para [NEGOCIO], usá la agenda de quince tareas adjunta y conservá sus números y días: lunes respuestas frecuentes/propuesta/resumen de llamada; martes ideas de reseñas/texto de publicación/guion; miércoles apertura/tareas de notas/instructivo; jueves costos/descuento/aporte de productos; viernes reclamos/encuesta/mejoras. Para cada tarea pedime solo los datos autorizados necesarios, definí resultado esperado, revisión y responsable por confirmar. No inventes costos ni procesos y no envíes mensajes ni modifiques cuentas. Elegí una tarea para probar primero y compará tiempo manual con preparación, ejecución y corrección usando IA.
+
+Una prueba de delegación con resultado verificable
+Tarea actual [CASO], insumo autorizado [MATERIAL], responsable [PERSONA] y entrega esperada [FORMATO]. Prepará un primer borrador usando solo ese material, separá las dudas y listá tres comprobaciones concretas para revisar la salida. No ejecutes acciones externas. Después te pasaré los tiempos de preparación, ejecución y corrección para comparar la prueba con el trabajo manual.
