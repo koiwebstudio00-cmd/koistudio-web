@@ -15,9 +15,11 @@ assert(!(await readFile(path.join(root,'sitemap.xml'),'utf8')).includes('404.htm
 const homeHtml=await readFile(path.join(root,'index.html'),'utf8');
 assert.match(homeHtml,/id="cupo"/);
 assert.match(homeHtml,/Quedan 3 lugares/);
-assert.match(homeHtml,/data-whatsapp="5493813359456"/);
+assert.match(homeHtml,/escribinos y te damos una auditoría gratuita/);
+assert.match(homeHtml,/Quiero mi auditoría gratis/);
+assert.match(homeHtml,/Te respondemos por WhatsApp\. Sin compromiso\./);
+assert.match(homeHtml,/https:\/\/wa\.me\/5493813359456\?text=Hola%2C%20quiero%20la%20auditor%C3%ADa%20gratuita/);
+assert.doesNotMatch(homeHtml,/cupo-phone|dejanos tus datos|asesoría gratuita/);
 assert.doesNotMatch(await readFile(path.join(root,'privacidad/index.html'),'utf8'),/id="cupo"/);
-const cupoJs=await readFile(path.join(root,'assets/cupo.js'),'utf8');
-assert.match(cupoJs,/popup-cupo-10/);
-assert.match(cupoJs,/koi-cupo-10/);
+assert.match(await readFile(path.join(root,'assets/cupo.js'),'utf8'),/koi-cupo-10/);
 console.log(`OK: ${pages.length} páginas, ${links} enlaces y recursos locales, títulos únicos, metadatos, JSON-LD, sitemap y logos originales.`);
