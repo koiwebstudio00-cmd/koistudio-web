@@ -12,4 +12,12 @@ assert.equal(createHash('sha256').update(await readFile(path.join(root,'assets/b
 assert.equal(createHash('sha256').update(await readFile(path.join(root,'assets/brand/logo-white.png'))).digest('hex'),'7044aecb0cd3a5bbca489b7f16cb75405d658d145c643dfcf523a69911244a41','Logo blanco original intacto');
 for(const filename of ['robots.txt','sitemap.xml'])await stat(path.join(root,filename));
 assert(!(await readFile(path.join(root,'sitemap.xml'),'utf8')).includes('404.html'));
+const homeHtml=await readFile(path.join(root,'index.html'),'utf8');
+assert.match(homeHtml,/id="cupo"/);
+assert.match(homeHtml,/Quedan 3 lugares/);
+assert.match(homeHtml,/data-whatsapp="5493813359456"/);
+assert.doesNotMatch(await readFile(path.join(root,'privacidad/index.html'),'utf8'),/id="cupo"/);
+const cupoJs=await readFile(path.join(root,'assets/cupo.js'),'utf8');
+assert.match(cupoJs,/popup-cupo-10/);
+assert.match(cupoJs,/koi-cupo-10/);
 console.log(`OK: ${pages.length} páginas, ${links} enlaces y recursos locales, títulos únicos, metadatos, JSON-LD, sitemap y logos originales.`);

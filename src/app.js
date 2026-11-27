@@ -1,4 +1,5 @@
 import Lenis from './lenis.js';
+import { startCupo } from './cupo.js';
 
 const lenis = new Lenis({ autoRaf: true, lerp: 0.095, stopInertiaOnNavigate: true });
 
@@ -73,7 +74,7 @@ document.addEventListener('click', event => {
   }
 });
 document.addEventListener('keydown', event => {
-  if (event.key !== 'Escape') return;
+  if (event.key !== 'Escape' || document.getElementById('cupo')?.open) return;
   const openMenu = Array.from(productMenus).find(menu => menu.open && menu.getClientRects().length);
   if (openMenu) {
     openMenu.open = false;
@@ -123,6 +124,11 @@ if (caseViewer) {
     showSlide(index + (event.key === 'ArrowLeft' ? -1 : 1));
   });
 }
+
+startCupo(document.getElementById('cupo'), {
+  lenis,
+  onOpen() { setMenu(false); },
+});
 
 if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
   const observer = new IntersectionObserver(entries => {

@@ -10,6 +10,7 @@ import { resourceIndex, resourceDetail } from '../src/resource-pages.mjs';
 import { carouselArticles, carouselDetail } from '../src/carousel-resources.mjs';
 import { buildResourceTools } from './resource-tools.mjs';
 import { privacyPage } from '../src/privacy.mjs';
+import { cupoMarkup } from '../src/cupo.js';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const out = path.join(root, 'dist');
@@ -138,6 +139,7 @@ ${route === '/' || route === '/proyectos/' || route.startsWith('/productos/') ? 
 <footer class="footer">
   <div class="wrap footer-inner">${brand}<span>© ${new Date().getFullYear()} Koi Studio</span><nav aria-label="Pie de página"><a href="/recursos/">Recursos</a><a href="${escape(config.instagram)}">Instagram</a><a href="/privacidad/"${route === '/privacidad/' ? ' aria-current="page"' : ''}>Privacidad</a></nav></div>
 </footer>
+${route === '/' ? cupoMarkup(config.whatsapp) : ''}
 </body>
 </html>`;
 }
@@ -381,7 +383,7 @@ const pages = [
 await rm(out, { recursive: true, force: true });
 await mkdir(out, { recursive: true });
 await cp(path.join(root, 'assets'), path.join(out, 'assets'), { recursive: true });
-for (const file of ['styles.css', 'app.js', 'analytics.js', 'hero-shader.js', 'resources.css', 'resources.js']) {
+for (const file of ['styles.css', 'app.js', 'cupo.js', 'analytics.js', 'hero-shader.js', 'resources.css', 'resources.js']) {
   await cp(path.join(root, 'src', file), path.join(out, 'assets', file));
 }
 const lenis = path.join(root, 'node_modules/lenis');
