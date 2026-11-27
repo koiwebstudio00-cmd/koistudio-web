@@ -9,6 +9,7 @@ import { resources } from '../src/resources.mjs';
 import { resourceIndex, resourceDetail } from '../src/resource-pages.mjs';
 import { carouselArticles, carouselDetail } from '../src/carousel-resources.mjs';
 import { buildResourceTools } from './resource-tools.mjs';
+import { privacyPage } from '../src/privacy.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const out = path.join(root, 'dist');
@@ -135,7 +136,7 @@ ${route === '/' || route === '/proyectos/' || route.startsWith('/productos/') ? 
 </header>
 <main id="contenido">${content}</main>
 <footer class="footer">
-  <div class="wrap footer-inner">${brand}<span>© ${new Date().getFullYear()} Koi Studio</span><nav aria-label="Pie de página"><a href="/recursos/">Recursos</a><a href="${escape(config.instagram)}">Instagram</a><a href="/privacidad/">Privacidad</a></nav></div>
+  <div class="wrap footer-inner">${brand}<span>© ${new Date().getFullYear()} Koi Studio</span><nav aria-label="Pie de página"><a href="/recursos/">Recursos</a><a href="${escape(config.instagram)}">Instagram</a><a href="/privacidad/"${route === '/privacidad/' ? ' aria-current="page"' : ''}>Privacidad</a></nav></div>
 </footer>
 </body>
 </html>`;
@@ -398,7 +399,12 @@ for (const resource of resources) {
 }
 const toolRoutes=await buildResourceTools(root,out,carouselArticles,config.url);
 await mkdir(path.join(out, 'privacidad'));
-await writeFile(path.join(out, 'privacidad/index.html'), shell('Privacidad | Koi Studio', 'Información sobre el uso de datos.', '/privacidad/', `<section class="inner-intro"><div class="wrap legal"><h1>Privacidad</h1><p>Usamos Microsoft Clarity en el sitio público para mejorar la experiencia mediante mapas de calor y grabaciones de sesiones. Clarity puede procesar interacciones, datos técnicos del dispositivo y cookies según su configuración y las preferencias de consentimiento. Podés consultar la <a href="https://privacy.microsoft.com/es-es/privacystatement">declaración de privacidad de Microsoft</a>.</p><p>Si nos escribís por WhatsApp, usamos lo que compartís para responder tu consulta. Para consultas sobre tus datos, escribinos a <a href="mailto:${escape(config.email)}">${escape(config.email)}</a>.</p></div></section>`));
+await writeFile(path.join(out, 'privacidad/index.html'), shell(
+  'Política de privacidad | Koi Studio',
+  'Política de privacidad de Koi Studio: qué datos tratamos, para qué los usamos y cómo pedir acceso, rectificación o eliminación.',
+  '/privacidad/',
+  privacyPage(config),
+));
 await writeFile(path.join(out, '404.html'), shell('Página no encontrada | Koi Studio', 'Volvé al inicio de Koi Studio.', '/404.html', `<section class="inner-intro"><div class="wrap">${note('404')}<h1>Página no encontrada</h1>${button('Volver al inicio', '/')}</div></section>`, false));
 await writeFile(path.join(out, 'robots.txt'), 'User-agent: *\nAllow: /\nSitemap: ' + config.url + '/sitemap.xml\n');
 await writeFile(path.join(out, 'sitemap.xml'), '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' +

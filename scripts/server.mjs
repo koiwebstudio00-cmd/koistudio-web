@@ -43,6 +43,7 @@ http.createServer(async(req,res)=>{
  try{
   const url=new URL(req.url,'http://localhost');
   const pathname=decodeURIComponent(url.pathname);
+  if(pathname==='/privacy-policy'||pathname==='/privacy-policy/'){res.writeHead(308,{Location:'/privacidad/'+url.search});return res.end();}
   let file=path.resolve(root,'.'+pathname);
   if(file!==root&&!file.startsWith(root+path.sep)){res.writeHead(403);return res.end('Forbidden');}
   let status=200;
